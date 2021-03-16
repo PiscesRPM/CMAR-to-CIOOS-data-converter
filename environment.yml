@@ -106,4 +106,10 @@ dependencies:
   - zeromq=4.3.3=he6710b0_3
   - zipp=3.4.1=pyhd3eb1b0_0
   - zlib=1.2.11=h7b6447c_3
+  - pip:
+    - chardet==4.0.0
+    - idna==2.10
+    - requests==2.25.1
+    - sodapy==2.1.0
+    - urllib3==1.26.4
 prefix: /home/bcovey/miniconda3/envs/CMAR
