@@ -62,7 +62,7 @@ def merge_timestamps(grouped_df):
 
 def group_by_timestamp(df):
     grouped_df = df.groupby(
-        ['waterbody', 'station', 'lease', 'latitude', 
+        ['waterbody', 'station', 'latitude', 
             'longitude', 'deployment_period', 'timestamp', 
             'sensor', 'depth'
         ], as_index=False
