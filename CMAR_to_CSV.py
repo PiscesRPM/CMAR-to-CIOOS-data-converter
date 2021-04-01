@@ -2,6 +2,7 @@
 import os
 import pandas as pd
 from sodapy import Socrata
+from tqdm import tqdm
 import sys
 
 def merge_timestamps(grouped_df):
@@ -33,8 +34,8 @@ def group_by_timestamp(df):
             'sensor', 'depth'
         ], as_index=False
     )
-
-    merged_df = grouped_df.apply(merge_timestamps)
+    tqdm.pandas()
+    merged_df = grouped_df.progress_apply(merge_timestamps)
     return merged_df
 
 def main(dataset_id="eb3n-uxcb", merged_csv_filename=None, output_raw_csv=False, raw_csv_filename=None):
