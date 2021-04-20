@@ -54,7 +54,9 @@ def main():
     eovEN = ['subSurfaceSalinity','subSurfaceTemperature', 'dissolvedOrganicCarbon']
     # eovFR = ['Salinité sous la surface','Température sous la surface', 'carbone inorganique dissous']
     # eovFR = [unicode('Salinité sous la surface', "utf-8"),unicode('Température sous la surface', "utf-8"), unicode('Salinité sous la surface', "utf-8")]
-    eovFR = [('Salinité sous la surface').encode(encoding='utf-8'),'Température sous la surface', 'carbone inorganique dissous']
+    eovFR = ['Salinité sous la surface', 'Température sous la surface', 'carbone inorganique dissous']
+    # eovFR = [s.encode(encoding='utf-8') for s in eovFR]
+    print(eovFR)
     temporal_begin = str(createDate) + 'T15:00:00.000Z'
 
     distributions = distribution.split(" and ")
@@ -82,8 +84,8 @@ def main():
                 }]
     print("\n",dict_file)
     yamlName =  "Halifax" + '.yaml' 
-    with open(yamlName, 'w') as f:
-        data = yaml.dump(dict_file, f, allow_unicode=True)
+    with open(yamlName, 'w', encoding='utf8') as f:
+        data = yaml.dump(dict_file, f, allow_unicode=True, sort_keys=False)
 
     
     
