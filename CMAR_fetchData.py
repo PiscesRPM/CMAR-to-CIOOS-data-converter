@@ -2,7 +2,7 @@ import os
 import pandas as pd
 from sodapy import Socrata
 import sys
-
+import argparse
 
 def fetch_data(dataset_id, output_raw_csv=False, raw_csv_filename=None):
     
@@ -42,12 +42,17 @@ def fetch_data(dataset_id, output_raw_csv=False, raw_csv_filename=None):
     return results_df
 
 def main(dataset_id="eb3n-uxcb", output_raw_csv=False, raw_csv_filename=None):
-    args = sys.argv[1:]
-    if len(args) == 2 and args[0] == '-setID':
-        dataset_id = args[1]
-    else:
-        print("Missing arguments.\nPlease input a -setID followed with the dataset ID. \nExample:python CSV_to_Unique_Stations.py -setID 1234")
-        exit(0)
+    parser = argparse.ArgumentParser()
+    # args = sys.argv[1:]
+    parser.add_argument("SetID", type=str,
+                    help="Dataset ID")
+    parser.add_argument("-o", help="custom name of output file")
+    args = parser.parse_args()
+    if args.o:
+        output_raw_csv = args.o
+        print("Custom name %s" %args.o)
+    dataset_id = args.SetID
+    
     
     df = fetch_data(dataset_id, output_raw_csv, raw_csv_filename)
 

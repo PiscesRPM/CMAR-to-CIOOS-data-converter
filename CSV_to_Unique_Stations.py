@@ -2,17 +2,16 @@
 import os
 import pandas as pd
 import sys
-
+import argparse
 def main():
-    
-    args = sys.argv[1:]
-    if len(args) == 2 and args[0] == '-f':
-        OGfile = args[1]
-        if (OGfile[-4:] != ".csv"):
-            print("File must have a csv extension. \nExample:python CSV_to_Unique_Stations.py -f data.csv")
-            exit(0)
-    else:
-        print("Please input a -f followed with a csv file. \nExample:python CSV_to_Unique_Stations.py -f data.csv")
+    parser = argparse.ArgumentParser()
+    # args = sys.argv[1:]
+    parser.add_argument("input", type=str,
+                    help="Input file name")
+    args = parser.parse_args()
+    OGfile = args.input
+    if (OGfile[-4:] != ".csv"):
+        print("File must have a csv extension. \nExample:python CSV_to_Unique_Stations.py -f data.csv")
         exit(0)
     df = pd.read_csv(OGfile,parse_dates=['timestamp'])
     original = os.path.splitext(OGfile)[0]

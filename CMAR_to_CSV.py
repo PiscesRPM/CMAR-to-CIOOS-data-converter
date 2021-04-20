@@ -4,6 +4,7 @@ import pandas as pd
 from sodapy import Socrata
 from tqdm import tqdm
 import sys
+import argparse
 
 def merge_timestamps(grouped_df):
     non_unique = ['variable', 'value']
@@ -39,14 +40,18 @@ def group_by_timestamp(df):
     return merged_df
 
 def main(dataset_id="eb3n-uxcb", merged_csv_filename=None, output_raw_csv=False, raw_csv_filename=None):
-    args = sys.argv[1:]
-    if len(args) == 2 and args[0] == '-f':
-        OGfile = args[1]
-        if (OGfile[-4:] != ".csv"):
-            print("File must have a csv extension. \nExample:python CSV_to_Unique_Stations.py -f data.csv")
-            exit(0)
-    else:
-        print("Missing arguments.\nPlease input a -f followed with a csv file. \nExample:python CSV_to_Unique_Stations.py -f data.csv")
+    parser = argparse.ArgumentParser()
+    # args = sys.argv[1:]
+    parser.add_argument("input", type=str,
+                    help="Input file name")
+    parser.add_argument("-o", help="custom name of output file")
+    args = parser.parse_args()
+    if args.o:
+        merged_csv_filename = args.o
+        print("Custom name %s" %args.o)
+    OGfile = args.input
+    if (OGfile[-4:] != ".csv"):
+        print("File must have a csv extension. \nExample:python CSV_to_Unique_Stations.py -f data.csv")
         exit(0)
     
     # df = fetch_data(dataset_id, output_raw_csv, raw_csv_filename)
@@ -54,7 +59,7 @@ def main(dataset_id="eb3n-uxcb", merged_csv_filename=None, output_raw_csv=False,
     # Merge data based on waterbody, station, lease, latitude, longitude, deployment_period, timestamp, and sensor 
     merged_df = group_by_timestamp(df)
     if merged_csv_filename is None:
-        merged_csv_filename = "%s_merged.csv" % dataset_id
+        merged_csv_filename = "%s_merged.csv" % OGfile
     merged_df.to_csv(merged_csv_filename, index=False)
 
 if __name__ == "__main__":
