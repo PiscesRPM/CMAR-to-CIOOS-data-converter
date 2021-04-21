@@ -6,6 +6,8 @@ from datetime import datetime
 import uuid
 import pandas as pd
 
+sensor_config_file = 'sensors.yaml'
+
 url = 'https://data.novascotia.ca/api/views/metadata/v1/x9dy-aai9'
 def get_metadata(dataset_id):
     url = 'https://data.novascotia.ca/api/views/metadata/v1/'
@@ -124,9 +126,56 @@ def get_vertical(df):
 def get_spatial(df):
     return
 
+def get_instruments(df):
+    return df['sensor'].unique()
+
+def get_platform(df):
+    platforms = df['station'].unique()
+    if len(platforms) > 1:
+        raise Exception("This data file includes multiple stations")
+    platform = platforms[0]
+
+    instrument_list = get_instruments(df)
+    if os.path.exists(sensor_config_file):
+        with open(sensor_config_file) as f:
+            instrument_config = yaml.load(f, Loader=yaml.FullLoader)
+    else:
+        instrument_config = {}
+    
+    new_instrument_found = False
+    instruments = []
+    for instrument in instrument_list:
+        if instrument not in instrument_config:
+            instrument_config[instrument] = {
+                "id": instrument,
+                "manufacturer": '',
+                "type": {
+                    "en": "Sensor",
+                    "fr": ""
+                },
+                "version": ""
+            }
+            new_instrument_found = True
+        else:
+            instruments.append(instrument_config[instrument]) 
+    
+    if new_instrument_found:
+        with open(sensor_config_file, 'w') as f:
+            yaml.dump(instrument_config, f)
+        raise Exception("New sensors found, please update the following config file with additional information: %s" % sensor_config_file)
+
+    return {
+        "id": platform,
+        "description": {"en": platform},
+        "instruments": instruments
+    }
+
 def generate_metadata_from_data(metadata, data_file):
     df = pd.read_csv(data_file, parse_dates=['timestamp'])
-    return
+
+    platform = get_platform(df)
+    metadata["platform"] = platform
+    return metadata
 
 def main(dataset_id, data_file, outputFolder=None):
     metadata = generate_from_metadata(dataset_id)
@@ -142,7 +191,7 @@ def main(dataset_id, data_file, outputFolder=None):
         yamlName = outputFolder + "/" + yamlName
         
     with open(yamlName, 'w', encoding='utf8') as f:
-        data = yaml.dump(metadata, f, allow_unicode=True, sort_keys=False)
+        data = yaml.dump(updated_metadata, f, allow_unicode=True, sort_keys=False)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
