@@ -37,7 +37,7 @@ def main(dataset_id, outputFolder):
 
     #dict_file = [{'spatial' : {'bbox': [logitude, latitude, longitude, latidude]}}]
     lang = 'en'
-    if (metadata['customFields']['Detailed Metadata']['Language'] == 'eng'):
+    if (language == 'eng'):
         lang = 'en'
     else:
         lang = 'fr'
@@ -122,9 +122,11 @@ def main(dataset_id, outputFolder):
     if outputFolder != None:
         outputFolder = os.path.dirname(__file__) + '/' + outputFolder
         path = os.path.join(os.path.dirname(__file__), outputFolder)
+        if not os.path.exists(path):
+            os.mkdir(path)
         # yamlName = os.path.join(outputFolder,yamlName)
         yamlName = outputFolder + "/" + yamlName
-        os.mkdir(path)
+        
     with open(yamlName, 'w', encoding='utf8') as f:
         data = yaml.dump(dict_file, f, allow_unicode=True, sort_keys=False)
 
