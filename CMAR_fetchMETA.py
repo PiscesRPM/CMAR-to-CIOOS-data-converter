@@ -11,7 +11,7 @@ def get_metadata(page, dataset_id):
     url = url + dataset_id
     return requests.get(url).json()
 
-def main(dataset_id):
+def main(dataset_id, outputFolder):
     page = 1
     all_metadata = []
     metadata = get_metadata(page,dataset_id)
@@ -79,6 +79,11 @@ def main(dataset_id):
                 }]
     print("\n",dict_file)
     yamlName =  "Halifax" + '.yaml' 
+    # if outputFolder != None:
+    #     outputFolder = '/' + outputFolder
+    #     # yamlName = os.path.join(outputFolder,yamlName)
+    #     yamlName = outputFolder + "/" + yamlName
+    #     os.mkdir(yamlName)
     with open(yamlName, 'w', encoding='utf8') as f:
         data = yaml.dump(dict_file, f, allow_unicode=True, sort_keys=False)
 
@@ -92,9 +97,14 @@ if __name__ == "__main__":
     # args = sys.argv[1:]
     parser.add_argument("SetID", type=str,
                     help="Dataset ID")
+    parser.add_argument("-o", help="custom name of output directory")
     args = parser.parse_args()
+    outputFolder = None
+    if args.o:
+        outputFolder = args.o
+        print("Files will be outputted in %s" %args.o)
     dataset_id = args.SetID
-    main(dataset_id)
+    main(dataset_id, outputFolder)
 # while len(metadata) > 0:
 #     all_metadata.extend(metadata)
 #     page += 1
