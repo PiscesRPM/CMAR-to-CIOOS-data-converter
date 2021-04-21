@@ -1,0 +1,42 @@
+HOBO-10817496:
+  id: HOBO-10817496
+  manufacturer: 'ONSET'
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20291431:
+  id: HOBO-20291431
+  manufacturer: 'ONSET'
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+VR2AR-547111:
+  id: VR2AR-547111
+  manufacturer: 'Vemco'
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-670380:
+  id: aquaMeasure-670380
+  manufacturer: 'Innovasea'
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-670381:
+  id: aquaMeasure-670381
+  manufacturer: 'Innovasea'
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-675016:
+  id: aquaMeasure-675016
+  manufacturer: 'Innovasea'
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
