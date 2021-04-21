@@ -113,24 +113,37 @@ def generate_from_metadata(dataset_id):
     return dict_file
 
 def get_bbox(df):
-    return
+    return [
+        float(df['longitude'].min()),
+        float(df['latitude'].min()),
+        float(df['longitude'].max()),
+        float(df['latitude'].max())
+    ]
 
 def get_vertical(df):
     return [
-        df['depth'].min(),
-        df['depth'].max()
+        float(df['depth'].min()),
+        float(df['depth'].max())
     ]
 
 def get_spatial(df):
-    return
+    return {
+        'bbox' : get_bbox(df), 'vertical' : get_vertical(df)
+    }
 
 def generate_metadata_from_data(metadata, data_file):
     df = pd.read_csv(data_file, parse_dates=['timestamp'])
-    return
+
+    metadata['spatial'] = get_spatial(df)
+
+    return metadata
 
 def main(dataset_id, data_file, outputFolder=None):
     metadata = generate_from_metadata(dataset_id)
+    print(metadata['spatial'])
     updated_metadata = generate_metadata_from_data(metadata, data_file)
+
+    print(updated_metadata['spatial'])
 
     yamlName =  "Halifax" + '.yaml' 
     if outputFolder != None:
@@ -142,7 +155,7 @@ def main(dataset_id, data_file, outputFolder=None):
         yamlName = outputFolder + "/" + yamlName
         
     with open(yamlName, 'w', encoding='utf8') as f:
-        data = yaml.dump(metadata, f, allow_unicode=True, sort_keys=False)
+        data = yaml.dump(updated_metadata, f, allow_unicode=True, sort_keys=False)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
