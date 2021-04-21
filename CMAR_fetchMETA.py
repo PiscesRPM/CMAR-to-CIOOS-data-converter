@@ -51,7 +51,11 @@ def main(dataset_id, outputFolder):
     # eovFR = [s.encode(encoding='utf-8') for s in eovFR]
     print(eovFR)
     # temporal_begin = str(createDate) + 'T15:00:00.000Z'
-    temporal_begin = createDate
+    temporal_begin = datetime.strptime(
+        createDate,
+        '%Y-%m-%dT%H:%M:%S+%f'
+    )
+    print(temporal_begin)
 
     distributions = distribution.split(" and ")
     dist = []
@@ -72,11 +76,15 @@ def main(dataset_id, outputFolder):
             'language': lang,
             'maintenance_note':'Generated from https://cioos-siooc.github.io/metadata-entry-form',
             'dates':{
-                'revision':datetime.today().strftime('%Y-%m-%d-%H:%M:%S'),
-                'publication':datetime.today().strftime('%Y-%m-%d')
+                'revision':datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z',
+                'publication':datetime.utcnow().strftime('%Y-%m-%d')
             }
         },
         #add spatial
+        'spatial': {
+            'bbox': [],
+            'vertical': []
+        },
         'identification' : {
             'title' : {
                 'en': title,
@@ -100,12 +108,12 @@ def main(dataset_id, outputFolder):
                     'fr':eovFR
                 }
             },
-            'temporal_begin': temporal_begin,
+            'temporal_begin': temporal_begin.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z',
             'status': status,
             'progress_code': progress_code
         },
-        'contact':{
-            '- roles': roles, 
+        'contact':[
+            {'roles': ['owner', 'custodian', 'author', 'distributor'], 
             'organization': {
                 'name': orgName
             }, 
@@ -113,11 +121,11 @@ def main(dataset_id, outputFolder):
                 'position':orgPosition,
                 'email':orgEmail
             }
-        },
+        }],
         'distribution' : dist, 
         # add platform 'platform':{'id':platformID,'description':{'en':platformID},'instruments':}
     }]
-    print("\n",dict_file)
+    # print("\n",dict_file)
     yamlName =  "Halifax" + '.yaml' 
     if outputFolder != None:
         outputFolder = os.path.dirname(__file__) + '/' + outputFolder
