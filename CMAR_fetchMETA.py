@@ -11,14 +11,7 @@ def get_metadata(page, dataset_id):
     url = url + dataset_id
     return requests.get(url).json()
 
-def main():
-    parser = argparse.ArgumentParser()
-    # args = sys.argv[1:]
-    parser.add_argument("SetID", type=str,
-                    help="Dataset ID")
-    args = parser.parse_args()
-    dataset_id = args.SetID
-    
+def main(dataset_id):
     page = 1
     all_metadata = []
     metadata = get_metadata(page,dataset_id)
@@ -95,7 +88,13 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    # args = sys.argv[1:]
+    parser.add_argument("SetID", type=str,
+                    help="Dataset ID")
+    args = parser.parse_args()
+    dataset_id = args.SetID
+    main(dataset_id)
 # while len(metadata) > 0:
 #     all_metadata.extend(metadata)
 #     page += 1
