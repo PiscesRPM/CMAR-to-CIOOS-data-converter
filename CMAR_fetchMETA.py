@@ -108,12 +108,12 @@ def main(dataset_id, outputFolder):
                     'fr':eovFR
                 }
             },
-            'temporal_begin': temporal_begin,
+            'temporal_begin': temporal_begin.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z',
             'status': status,
             'progress_code': progress_code
         },
-        'contact':{
-            '- roles': roles, 
+        'contact':[
+            {'roles': ['owner', 'custodian', 'author', 'distributor'], 
             'organization': {
                 'name': orgName
             }, 
@@ -121,7 +121,7 @@ def main(dataset_id, outputFolder):
                 'position':orgPosition,
                 'email':orgEmail
             }
-        },
+        }],
         'distribution' : dist, 
         # add platform 'platform':{'id':platformID,'description':{'en':platformID},'instruments':}
     }]
