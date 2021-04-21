@@ -2,8 +2,8 @@ import requests
 import argparse
 import os
 import yaml
-import secrets
 from datetime import datetime
+import uuid
 
 url = 'https://data.novascotia.ca/api/views/metadata/v1/x9dy-aai9'
 def get_metadata(page, dataset_id):
@@ -57,25 +57,27 @@ def main():
     eovFR = ['Salinité sous la surface', 'Température sous la surface', 'carbone inorganique dissous']
     # eovFR = [s.encode(encoding='utf-8') for s in eovFR]
     print(eovFR)
-    temporal_begin = str(createDate) + 'T15:00:00.000Z'
+    # temporal_begin = str(createDate) + 'T15:00:00.000Z'
+    temporal_begin = createDate
 
     distributions = distribution.split(" and ")
     dist = []
     for distri in distributions:
-        distURL = distri.split("(",1)[0]
-        distName = distri.split("(",1)[1]
+        distName = distri.split("(",1)[0]
+        distURL = distri.split("(",1)[1]
         distName = distName[:-1]
+        distURL = distURL.split(")",1)[0]
         distAdd  = {'url': distURL, 'name':distName}
         dist.append(distAdd)
     #dist = [{'url': distURL, 'name':distName},{'url': distURL, 'name':distName}]
 
 
-    dict_file = [{'metadata' : {'naming_authority': 'ca.coos','identifier': secrets.token_urlsafe(16), 'language': lang,
+    dict_file = [{'metadata' : {'naming_authority': 'ca.coos','identifier': str(uuid.uuid4()), 'language': lang,
                 'maintenance_note':'Generated from https://cioos-siooc.github.io/metadata-entry-form',
                 'dates':{'revision':datetime.today().strftime('%Y-%m-%d-%H:%M:%S'),'publication':datetime.today().strftime('%Y-%m-%d')}},
                 #add spatial
                 'identification' : {'title' : {'en': title, 'fr':''},'abstract':{'en':description,'fr':''}, 
-                'dates':{'creation':createDate,'publication':createDate,'revision':updateDate},
+                'dates':{'creation':createDate.split('T',1)[0],'publication':createDate.split('T',1)[0],'revision':updateDate.split('T',1)[0]},
                 'keywords':{'default':{'en':keywords},'eov':{'en':eovEN,'fr':eovFR}},
                 'temporal_begin': temporal_begin, 'status': status,'progress_code': progress_code},
                 'contact':{'- roles': roles, 'organization': {'name': orgName}, 'individual': {'position':orgPosition,'email':orgEmail}},
