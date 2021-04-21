@@ -65,18 +65,58 @@ def main(dataset_id, outputFolder):
     #dist = [{'url': distURL, 'name':distName},{'url': distURL, 'name':distName}]
 
 
-    dict_file = [{'metadata' : {'naming_authority': 'ca.coos','identifier': str(uuid.uuid4()), 'language': lang,
-                'maintenance_note':'Generated from https://cioos-siooc.github.io/metadata-entry-form',
-                'dates':{'revision':datetime.today().strftime('%Y-%m-%d-%H:%M:%S'),'publication':datetime.today().strftime('%Y-%m-%d')}},
-                #add spatial
-                'identification' : {'title' : {'en': title, 'fr':''},'abstract':{'en':description,'fr':''}, 
-                'dates':{'creation':createDate.split('T',1)[0],'publication':createDate.split('T',1)[0],'revision':updateDate.split('T',1)[0]},
-                'keywords':{'default':{'en':keywords},'eov':{'en':eovEN,'fr':eovFR}},
-                'temporal_begin': temporal_begin, 'status': status,'progress_code': progress_code},
-                'contact':{'- roles': roles, 'organization': {'name': orgName}, 'individual': {'position':orgPosition,'email':orgEmail}},
-                'distribution' : dist, 
-                # add platform 'platform':{'id':platformID,'description':{'en':platformID},'instruments':}
-                }]
+    dict_file = [{
+        'metadata' : {
+            'naming_authority': 'ca.coos',
+            'identifier': str(uuid.uuid4()), 
+            'language': lang,
+            'maintenance_note':'Generated from https://cioos-siooc.github.io/metadata-entry-form',
+            'dates':{
+                'revision':datetime.today().strftime('%Y-%m-%d-%H:%M:%S'),
+                'publication':datetime.today().strftime('%Y-%m-%d')
+            }
+        },
+        #add spatial
+        'identification' : {
+            'title' : {
+                'en': title,
+                'fr':''
+            },
+            'abstract':{
+                'en':description,
+                'fr':''
+            }, 
+            'dates':{
+                'creation':createDate.split('T',1)[0],
+                'publication':createDate.split('T',1)[0],
+                'revision':updateDate.split('T',1)[0]
+            },
+            'keywords':{
+                'default':{
+                    'en':keywords
+                },
+                'eov':{
+                    'en':eovEN,
+                    'fr':eovFR
+                }
+            },
+            'temporal_begin': temporal_begin,
+            'status': status,
+            'progress_code': progress_code
+        },
+        'contact':{
+            '- roles': roles, 
+            'organization': {
+                'name': orgName
+            }, 
+            'individual': {
+                'position':orgPosition,
+                'email':orgEmail
+            }
+        },
+        'distribution' : dist, 
+        # add platform 'platform':{'id':platformID,'description':{'en':platformID},'instruments':}
+    }]
     print("\n",dict_file)
     yamlName =  "Halifax" + '.yaml' 
     # if outputFolder != None:
