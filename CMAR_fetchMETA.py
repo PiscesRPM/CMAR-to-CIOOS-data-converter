@@ -127,11 +127,12 @@ def main(dataset_id, outputFolder):
     }]
     # print("\n",dict_file)
     yamlName =  "Halifax" + '.yaml' 
-    # if outputFolder != None:
-    #     outputFolder = '/' + outputFolder
-    #     # yamlName = os.path.join(outputFolder,yamlName)
-    #     yamlName = outputFolder + "/" + yamlName
-    #     os.mkdir(yamlName)
+    if outputFolder != None:
+        outputFolder = os.path.dirname(__file__) + '/' + outputFolder
+        path = os.path.join(os.path.dirname(__file__), outputFolder)
+        # yamlName = os.path.join(outputFolder,yamlName)
+        yamlName = outputFolder + "/" + yamlName
+        os.mkdir(path)
     with open(yamlName, 'w', encoding='utf8') as f:
         data = yaml.dump(dict_file, f, allow_unicode=True, sort_keys=False)
 
