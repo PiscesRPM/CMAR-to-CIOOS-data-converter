@@ -193,7 +193,7 @@ def main(dataset_id, data_file, outputFolder=None):
 
     print(updated_metadata['spatial'])
 
-    yamlName =  "Halifax" + '.yaml' 
+    yamlName = "%s.yaml" % data_file.split(".")[0]
     if outputFolder != None:
         outputFolder = os.path.dirname(__file__) + '/' + outputFolder
         path = os.path.join(os.path.dirname(__file__), outputFolder)
