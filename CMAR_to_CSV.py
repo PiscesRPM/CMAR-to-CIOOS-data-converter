@@ -63,7 +63,7 @@ def main(dataset_id="eb3n-uxcb", merged_csv_filename=None, output_raw_csv=False,
     # Merge data based on waterbody, station, lease, latitude, longitude, deployment_period, timestamp, and sensor 
     merged_df = group_by_timestamp(df)
     if merged_csv_filename is None:
-        merged_csv_filename = "%s_merged.csv" % OGfile
+        merged_csv_filename = "%s_merged.csv" % OGfile.split(".")[0]
     merged_df.to_csv(merged_csv_filename, index=False)
 
 if __name__ == "__main__":
