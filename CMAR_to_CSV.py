@@ -14,8 +14,12 @@ def merge_timestamps(grouped_df):
     # Copy over all of the unique columns     
     for col in grouped_df:
         if col not in non_unique:
-            new_df[col] = grouped_df[col].unique()
-    
+            if col == 'deployment_period':
+                deployment_dates = grouped_df[col].unique()[0].split(' to ',1)
+                new_df['deployment_start_date'] = deployment_dates[0]
+                new_df['deployment_end_date'] = deployment_dates[1]
+            else:
+                new_df[col] = grouped_df[col].unique()
     # Handle the non-unique columns
     # Create a column for each variable, store the associated value
     # If there are multiple, different values for the same variable, at the same time, raise an error     
