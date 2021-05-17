@@ -42,8 +42,12 @@ def fetch_data(dataset_id, output_raw_csv=False, raw_csv_filename=None):
     return results_df
 
 def main(dataset_id=None, output_raw_csv=False, raw_csv_filename=None):
+    df = fetch_data(dataset_id, output_raw_csv, raw_csv_filename)
+
+
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    # args = sys.argv[1:]
+
     parser.add_argument("SetID", type=str,
                     help="Dataset ID")
     parser.add_argument("-o", help="custom name of output file")
@@ -51,11 +55,8 @@ def main(dataset_id=None, output_raw_csv=False, raw_csv_filename=None):
     if args.o:
         output_raw_csv = args.o
         print("Custom name %s" %args.o)
+    else:
+        output_raw_csv = None
     dataset_id = args.SetID
-    
-    
-    df = fetch_data(dataset_id, output_raw_csv, raw_csv_filename)
 
-
-if __name__ == "__main__":
-    main(output_raw_csv=True)
+    main(dataset_id=dataset_id, output_raw_csv=True, raw_csv_filename=output_raw_csv)
