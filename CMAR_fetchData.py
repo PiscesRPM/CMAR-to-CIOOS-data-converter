@@ -41,7 +41,7 @@ def fetch_data(dataset_id, output_raw_csv=False, raw_csv_filename=None):
         print("No new data found, proceeding with data from: %s" % raw_csv_filename)
     return results_df
 
-def main(dataset_id="eb3n-uxcb", output_raw_csv=False, raw_csv_filename=None):
+def main(dataset_id=None, output_raw_csv=False, raw_csv_filename=None):
     parser = argparse.ArgumentParser()
     # args = sys.argv[1:]
     parser.add_argument("SetID", type=str,
