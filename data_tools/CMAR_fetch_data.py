@@ -35,7 +35,12 @@ def fetch_data(dataset_id, output_raw_csv=False, raw_csv_filename=None):
     # Output the unmerged data if desired
     if output_raw_csv and new_rows > 0:
         print("Found new data, writing to raw file: %s" % raw_csv_filename)
-        results_df.to_csv(raw_csv_filename, index=False)
+
+        outputFolder2 = os.path.dirname(__file__) + '/' + dataset_id
+        path = os.path.join(os.path.dirname(__file__), outputFolder2)
+        if not os.path.exists(path):
+            os.mkdir(path)
+        results_df.to_csv(os.path.join(path,raw_csv_filename), index=False)
 
     if new_rows == 0:
         print("No new data found, proceeding with data from: %s" % raw_csv_filename)

@@ -210,12 +210,12 @@ def main(dataset_id, data_file, outputFolder=None):
 
     yamlName = "%s.yaml" % data_file.split(".")[0]
     if outputFolder != None:
-        outputFolder = os.path.dirname(__file__) + '/' + outputFolder
-        path = os.path.join(os.path.dirname(__file__), outputFolder)
+        outputFolder2 = os.path.dirname(__file__) + '/' + outputFolder
+        path = os.path.join(os.path.dirname(__file__), outputFolder2)
         if not os.path.exists(path):
             os.mkdir(path)
         # yamlName = os.path.join(outputFolder,yamlName)
-        yamlName = outputFolder + "/" + yamlName
+        yamlName = outputFolder2 + "/" + yamlName
         
     with open(yamlName, 'w', encoding='utf8') as f:
         data = yaml.dump(updated_metadata, f, allow_unicode=True, sort_keys=False)

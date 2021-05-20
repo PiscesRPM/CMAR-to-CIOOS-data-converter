@@ -5,20 +5,17 @@ import sys
 import argparse
 from pathlib import Path
 
-from data_tools import CMAR_fetch_data
+from data_tools import CMAR_fetch_data, CSV_split_by_station, CMAR_data_converter, CMAR_fetch_metadata
 
 
 def main():
     # example list
     dataset_id_list = ['eb3n-uxcb','x9dy-aai9']
     for set_id in dataset_id_list:
-        # os.system("CMAR_fetchData.py ")
-        # CMAR_fetch_data.main() <--- call like this
-        outputFolder = os.path.dirname(__file__) + '/' + set_id + ' Data Set'
-        path = os.path.join(os.path.dirname(__file__), outputFolder)
-        # Path(path).mkdir(parents=True, exist_ok=True)
-        if not os.path.exists(path):
-            os.mkdir(path)
+        # CMAR_fetch_data.main(set_id, True)
+        raw_file_name = 'data_tools\%s\%s' % (set_id,set_id + '_raw.csv')
+        CSV_split_by_station.main(raw_file_name,set_id)
+
 
 
 if __name__ == "__main__":
