@@ -13,6 +13,11 @@ def fetch_data(dataset_id, output_raw_csv=False, raw_csv_filename=None):
     if raw_csv_filename is None:
         raw_csv_filename = "%s_raw.csv" % dataset_id
 
+    if output_raw_csv:
+        output_folder = os.path.dirname(__file__) + '/' + dataset_id
+        path = os.path.join(os.path.dirname(__file__), output_folder)
+        raw_csv_filename = os.path.join(raw_csv_filename)
+
     results = None
     existing_df = None
     if os.path.exists(raw_csv_filename):
@@ -36,11 +41,9 @@ def fetch_data(dataset_id, output_raw_csv=False, raw_csv_filename=None):
     if output_raw_csv and new_rows > 0:
         print("Found new data, writing to raw file: %s" % raw_csv_filename)
 
-        outputFolder2 = os.path.dirname(__file__) + '/' + dataset_id
-        path = os.path.join(os.path.dirname(__file__), outputFolder2)
         if not os.path.exists(path):
             os.mkdir(path)
-        results_df.to_csv(os.path.join(path,raw_csv_filename), index=False)
+        results_df.to_csv(raw_csv_filename, index=False)
 
     if new_rows == 0:
         print("No new data found, proceeding with data from: %s" % raw_csv_filename)
