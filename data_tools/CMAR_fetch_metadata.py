@@ -208,9 +208,11 @@ def main(dataset_id, data_file, outputFolder=None):
 
     print(updated_metadata['spatial'])
 
-    yamlName = "%s.yaml" % data_file.split(".")[0]
+    # yamlName = "%s.yaml" % data_file.split(".")[0]
+    yamlName = "%s.yaml" % outputFolder
     if outputFolder != None:
-        outputFolder2 = os.path.dirname(__file__) + '/' + outputFolder
+        outputFolder2 = os.path.dirname(__file__) + '/' + dataset_id + '/'+ outputFolder
+        print(outputFolder2,"I GOOTA GO")
         path = os.path.join(os.path.dirname(__file__), outputFolder2)
         if not os.path.exists(path):
             os.mkdir(path)

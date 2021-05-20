@@ -34,9 +34,8 @@ def main(OGfile, outputFolder = None):
                 os.mkdir(path)
             data_for_current_station.to_csv(os.path.join(path,file_name),index=False)
             split_station_file = path + '/' + file_name
-            print(split_station_file,"THIS IS SPLIT_FILE_NAME IMPORTANT")
             merged_station_file = path + '/' + file_name.replace('.csv','_merged.csv')
-            meta_file_folder = outputFolder + '/' + file_name[:-4]
+            meta_file_folder = file_name[:-4]
             CMAR_data_converter.main(split_station_file)
             CMAR_fetch_metadata.main(outputFolder,merged_station_file,meta_file_folder)
         else:
