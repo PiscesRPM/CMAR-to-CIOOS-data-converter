@@ -3,20 +3,9 @@ import os
 import pandas as pd
 import sys
 import argparse
-from data_tools import CMAR_data_converter, CMAR_fetch_metadata
 
-def check_raw_file_extension(raw_filename):
-    """Checks that the raw file is a CSV, throws an error if not
+from . import util
 
-    Args:
-        raw_filename (String): The path to a file
-
-    Raises:
-        Exception: Throws an exception if the file is the wrong type
-    """    
-    raw_file_extension = os.path.splitext(raw_filename)[1]
-    if (raw_file_extension != ".csv"):
-        raise Exception("File must have a csv extension. \nExample:python CSV_to_Unique_Stations.py -f data.csv")
 
 def get_data_for_station(dataframe, station_name):
     """Filters the data in a dataframe to get the data for a particular station
@@ -53,7 +42,7 @@ def setup_station_output_filename(raw_filename, output_directory, station_name):
     return station_output_filename
 
 def main(raw_filename, output_directory):
-    check_raw_file_extension(raw_filename)
+    util.check_raw_file_extension(raw_filename)
 
     df = pd.read_csv(raw_filename, parse_dates=['timestamp'])
 

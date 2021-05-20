@@ -1,41 +1,132 @@
+HOBO-10817410:
+  id: HOBO-10817410
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 HOBO-10817496:
   id: HOBO-10817496
-  manufacturer: 'ONSET'
+  manufacturer: ONSET
   type:
     en: Sensor
     fr: ''
   version: ''
 HOBO-20291431:
   id: HOBO-20291431
-  manufacturer: 'ONSET'
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20291470:
+  id: HOBO-20291470
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20308042:
+  id: HOBO-20308042
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20308050:
+  id: HOBO-20308050
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20330412:
+  id: HOBO-20330412
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20330413:
+  id: HOBO-20330413
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20397535:
+  id: HOBO-20397535
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20495242:
+  id: HOBO-20495242
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20495250:
+  id: HOBO-20495250
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+VR2AR-545777:
+  id: VR2AR-545777
+  manufacturer: Vemco
   type:
     en: Sensor
     fr: ''
   version: ''
 VR2AR-547111:
   id: VR2AR-547111
-  manufacturer: 'Vemco'
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+VR2AR-548035:
+  id: VR2AR-548035
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-670351:
+  id: aquaMeasure-670351
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-670372:
+  id: aquaMeasure-670372
+  manufacturer: Innovasea
   type:
     en: Sensor
     fr: ''
   version: ''
 aquaMeasure-670380:
   id: aquaMeasure-670380
-  manufacturer: 'Innovasea'
+  manufacturer: Innovasea
   type:
     en: Sensor
     fr: ''
   version: ''
 aquaMeasure-670381:
   id: aquaMeasure-670381
-  manufacturer: 'Innovasea'
+  manufacturer: Innovasea
   type:
     en: Sensor
     fr: ''
   version: ''
 aquaMeasure-675016:
   id: aquaMeasure-675016
-  manufacturer: 'Innovasea'
+  manufacturer: Innovasea
   type:
     en: Sensor
     fr: ''
