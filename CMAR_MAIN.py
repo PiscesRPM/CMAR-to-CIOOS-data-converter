@@ -41,9 +41,14 @@ def main(output_directory):
             dataset_output_directory,
             dataset_id
         )
-        CMAR_fetch_data.main(dataset_id, raw_output_filename)
-        # raw_file_name = 'data_tools\%s\%s' % (set_id,set_id + '_raw.csv')
-        # CSV_split_by_station.main(raw_file_name,set_id)
+        # CMAR_fetch_data.main(dataset_id, raw_output_filename)
+
+        station_output_directory = os.path.join(dataset_output_directory, "data_by_station")
+        if not(os.path.exists(station_output_directory)):
+            os.mkdir(station_output_directory)
+
+        CSV_split_by_station.main(raw_output_filename, station_output_directory)
+
 
 
 
