@@ -1,9 +1,4 @@
 import os
-import pandas as pd
-from sodapy import Socrata
-import sys
-import argparse
-from pathlib import Path
 import argparse
 import glob
 
