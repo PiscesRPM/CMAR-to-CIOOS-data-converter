@@ -54,8 +54,11 @@ def main(output_directory, skip_fetch_data=False, skip_split_stations=False, ski
 
         # Iterate through every CSV file in station_output_directory and merge
         if not(skip_merge_data):
-            for input_filename in glob.glob(os.path.join(station_output_directory, "*.csv")):
-                CMAR_data_converter.main(input_filename, merged_output_directory)
+            if not(skip_split_stations):
+                for input_filename in glob.glob(os.path.join(station_output_directory, "*.csv")):
+                    CMAR_data_converter.main(input_filename, merged_output_directory)
+            else:
+                CMAR_data_converter.main(raw_output_filename, merged_output_directory)
 
         if not(skip_create_metadata):
             for data_file in glob.glob(os.path.join(merged_output_directory, "*.csv")):
