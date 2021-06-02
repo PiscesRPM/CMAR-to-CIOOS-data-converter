@@ -26,8 +26,6 @@ def fetch_data(dataset_id, output_filename):
         results = client.get(dataset_id, where="timestamp > \"%s\"" % max_date_string, limit=limit)
     else:
         results = client.get(dataset_id, limit=limit)
-    # results = client.get("eb3n-uxcb", limit=500000)
-
 
     # Convert to pandas DataFrame
     results_df = pd.DataFrame.from_records(results)
