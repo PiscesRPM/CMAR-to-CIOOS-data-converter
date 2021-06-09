@@ -8,7 +8,6 @@ import pandas as pd
 
 sensor_config_file = 'sensors.yaml'
 
-url = 'https://data.novascotia.ca/api/views/metadata/v1/x9dy-aai9'
 def get_metadata(dataset_id):
     url = 'https://data.novascotia.ca/api/views/metadata/v1/'
     url = url + dataset_id
@@ -201,43 +200,32 @@ def generate_metadata_from_data(metadata, data_file):
     metadata["platform"] = platform
     return metadata
 
-def main(dataset_id, data_file, outputFolder=None):
+def main(dataset_id, data_file, output_directory):
     metadata = generate_from_metadata(dataset_id)
-    print(metadata['spatial'])
     updated_metadata = generate_metadata_from_data(metadata, data_file)
+    
+    base_filename = os.path.splitext(os.path.basename(data_file))[0]
 
-    print(updated_metadata['spatial'])
-
-    # yamlName = "%s.yaml" % data_file.split(".")[0]
-    yamlName = "%s.yaml" % outputFolder
-    if outputFolder != None:
-        outputFolder2 = os.path.dirname(__file__) + '/' + dataset_id + '/'+ outputFolder
-        print(outputFolder2,"I GOOTA GO")
-        path = os.path.join(os.path.dirname(__file__), outputFolder2)
-        if not os.path.exists(path):
-            os.mkdir(path)
-        # yamlName = os.path.join(outputFolder,yamlName)
-        yamlName = outputFolder2 + "/" + yamlName
+    yamlName = os.path.join(
+        output_directory,
+        "%s.yaml" % base_filename
+    )
         
     with open(yamlName, 'w', encoding='utf8') as f:
         data = yaml.dump(updated_metadata, f, allow_unicode=True, sort_keys=False)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    # args = sys.argv[1:]
-    parser.add_argument("SetID", type=str,
+
+    parser.add_argument("dataset_id", type=str,
                     help="Dataset ID")
-    parser.add_argument("dataFile", type=str, help="Corresponding data file")
-    parser.add_argument("-o", help="custom name of output directory")
+    parser.add_argument("data_file", type=str, help="Corresponding data file")
+    parser.add_argument("output_directory", help="custom name of output directory")
+
     args = parser.parse_args()
-    outputFolder = None
-    if args.o:
-        outputFolder = args.o
-        print("Files will be outputted in %s" %args.o)
-    dataset_id = args.SetID
-    main(dataset_id, args.dataFile, outputFolder)
-# while len(metadata) > 0:
-#     all_metadata.extend(metadata)
-#     page += 1
-#     metadata = get_metadata(page)
-#     print(metadata)
+
+    dataset_id = args.dataset_id
+    data_file = args.data_file
+    output_directory = args.output_directory
+
+    main(dataset_id, data_file, output_directory)
