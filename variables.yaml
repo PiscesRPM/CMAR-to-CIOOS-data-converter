@@ -1,0 +1,150 @@
+Dissolved Oxygen:
+  attributes:
+    _FillValue:
+      type: float
+      value: NaN
+    colorBarMaximum:
+      type: double
+      value: '1.0'
+    colorBarMinimum:
+      type: double
+      value: '0.0'
+    ioos_category:
+      value: Dissolved O2
+    long_name:
+      value: Volume Fraction Of Oxygen In Sea Water
+    standard_name:
+      value: volume_fraction_of_oxygen_in_sea_water
+  dataType: float
+  destinationName: Dissolved_Oxygen
+Salinity:
+  attributes:
+    ioos_category:
+      value: Salinity
+    long_name:
+      value: Volume Fraction Of Salinity In Sea Water
+  dataType: float
+  destinationName: Salinity
+Temperature:
+  attributes:
+    _FillValue:
+      type: float
+      value: NaN
+    ioos_category:
+      value: Temperature
+    long_name:
+      value: Temperature
+  dataType: float
+  destinationName: Temperature
+deployment_period:
+  attributes:
+    ioos_category:
+      value: Unknown
+    long_name:
+      value: Deployment Period
+  dataType: String
+  destinationName: deployment_period
+depth:
+  attributes:
+    colorBarMaximum:
+      type: double
+      value: '8000.0'
+    colorBarMinimum:
+      type: double
+      value: '-8000.0'
+    colorBarPalette:
+      value: TopographyDepth
+    ioos_category:
+      value: Location
+    long_name:
+      value: Depth
+    standard_name:
+      value: depth
+    units:
+      value: m
+  dataType: byte
+  destinationName: depth
+latitude:
+  attributes:
+    colorBarMaximum:
+      type: double
+      value: '90.0'
+    colorBarMinimum:
+      type: double
+      value: '-90.0'
+    ioos_category:
+      value: Location
+    long_name:
+      value: Latitude
+    standard_name:
+      value: latitude
+    units:
+      value: degrees_north
+  dataType: float
+  destinationName: latitude
+lease:
+  attributes:
+    ioos_category:
+      value: Unknown
+    long_name:
+      value: Lease
+  dataType: String
+  destinationName: lease
+longitude:
+  attributes:
+    colorBarMaximum:
+      type: double
+      value: '180.0'
+    colorBarMinimum:
+      type: double
+      value: '-190.0'
+    ioos_category:
+      value: Location
+    long_name:
+      value: Longitude
+    standard_name:
+      value: longitude
+    units:
+      value: degrees_east
+  dataType: float
+  destinationName: longitude
+sensor:
+  attributes:
+    ioos_category:
+      value: Unknown
+    long_name:
+      value: Sensor
+  dataType: String
+  destinationName: sensor
+station:
+  attributes:
+    ioos_category:
+      value: Identifier
+    long_name:
+      value: Station
+  dataType: String
+  destinationName: station
+timestamp:
+  attributes:
+    ioos_category:
+      value: Time
+    long_name:
+      value: Timestamp
+    source_name:
+      value: timestamp
+    standard_name:
+      value: time
+    time_precision:
+      value: '1970-01-01T00:00:00Z'
+    units:
+      value: yyyy-MM-dd' 'HH:mm:ss
+  dataType: String
+  destinationName: time
+waterbody:
+  attributes:
+    ioos_category:
+      value: Unknown
+    long_name:
+      value: Waterbody
+  dataType: String
+  destinationName: waterbody
