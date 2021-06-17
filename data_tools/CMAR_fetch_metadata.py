@@ -61,7 +61,7 @@ def generate_from_metadata(dataset_id):
 
     dict_file = {
         'metadata' : {
-            'naming_authority': 'ca.coos',
+            'naming_authority': 'ca.cioos',
             'identifier': str(uuid.uuid4()), 
             'language': lang,
             'maintenance_note':'Generated from https://cioos-siooc.github.io/metadata-entry-form',
@@ -147,56 +147,78 @@ def get_spatial(df):
         'bbox' : get_bbox(df), 'vertical' : get_vertical(df)
     }
 
-def get_instruments(df):
-    return df['sensor'].unique()
+def get_instruments(df, platform):
+    return df[df['station'] == platform]['sensor'].unique()
 
-def get_platform(df):
+def guess_manufacturer(instrument, instrument_config):
+    partial_name = instrument.split('-')
+    if len(partial_name) >= 2:
+        for i in instrument_config:
+            if i.startswith(partial_name[0]) and instrument_config[i]['manufacturer'] != '':
+                return instrument_config[i]['manufacturer']
+    return None
+
+def get_platforms(df):
     platforms = df['station'].unique()
-    if len(platforms) > 1:
-        raise Exception("This data file includes multiple stations")
-    platform = platforms[0]
 
-    instrument_list = get_instruments(df)
-    if os.path.exists(sensor_config_file):
-        with open(sensor_config_file) as f:
-            instrument_config = yaml.load(f, Loader=yaml.FullLoader)
-    else:
-        instrument_config = {}
-    
-    new_instrument_found = False
-    instruments = []
-    for instrument in instrument_list:
-        if instrument not in instrument_config:
-            instrument_config[instrument] = {
-                "id": instrument,
-                "manufacturer": '',
-                "type": {
-                    "en": "Sensor",
-                    "fr": ""
-                },
-                "version": ""
-            }
-            new_instrument_found = True
+    platform_metadata = []
+
+    for platform in platforms:
+        instrument_list = get_instruments(df, platform)
+        if os.path.exists(sensor_config_file):
+            with open(sensor_config_file) as f:
+                instrument_config = yaml.load(f, Loader=yaml.FullLoader)
         else:
-            instruments.append(instrument_config[instrument]) 
-    
-    if new_instrument_found:
-        with open(sensor_config_file, 'w') as f:
-            yaml.dump(instrument_config, f)
-        raise Exception("New sensors found, please update the following config file with additional information: %s" % sensor_config_file)
+            instrument_config = {}
+        
+        new_instrument_found = False
+        new_instruments_no_match_found = False
+        instruments = []
+        for instrument in instrument_list:
+            if instrument not in instrument_config:
+                manufacturer = guess_manufacturer(instrument, instrument_config)
+                if manufacturer is None:
+                    manufacturer = ''
+                    new_instruments_no_match_found = True
 
-    return {
-        "id": platform,
-        "description": {"en": platform},
-        "instruments": instruments
-    }
+                instrument_config[instrument] = {
+                    "id": instrument,
+                    "manufacturer": manufacturer,
+                    "type": {
+                        "en": "Sensor",
+                        "fr": ""
+                    },
+                    "version": ""
+                }
+                new_instrument_found = True
+            else:
+                instruments.append(instrument_config[instrument]) 
+        
+        if new_instrument_found:
+            with open(sensor_config_file, 'w') as f:
+                yaml.dump(instrument_config, f)
+            if new_instruments_no_match_found:
+                raise Exception("New sensors found, please update the following config file with additional information: %s" % sensor_config_file)
+            else:
+                print("New sensors were found but it was possible to infer the manufacturer.")
+
+        platform_metadata.append({
+            "id": platform,
+            "description": {"en": platform},
+            "instruments": instruments
+        })
+    
+    if len(platform_metadata) == 1:
+        return platform_metadata[0]
+    else:
+        return platform_metadata
 
 def generate_metadata_from_data(metadata, data_file):
     df = pd.read_csv(data_file, parse_dates=['timestamp'])
 
     metadata['spatial'] = get_spatial(df)
 
-    platform = get_platform(df)
+    platform = get_platforms(df)
     metadata["platform"] = platform
     return metadata
 
