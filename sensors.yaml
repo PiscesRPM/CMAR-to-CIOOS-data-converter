@@ -1,3 +1,94 @@
+HOBO-10034842:
+  id: HOBO-10034842
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-10034850:
+  id: HOBO-10034850
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-10755213:
+  id: HOBO-10755213
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-10755214:
+  id: HOBO-10755214
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-10755223:
+  id: HOBO-10755223
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-10755242:
+  id: HOBO-10755242
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-10755251:
+  id: HOBO-10755251
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-10755265:
+  id: HOBO-10755265
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-10777103:
+  id: HOBO-10777103
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-10778917:
+  id: HOBO-10778917
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-10817399:
+  id: HOBO-10817399
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-10817401:
+  id: HOBO-10817401
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-10817409:
+  id: HOBO-10817409
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 HOBO-10817410:
   id: HOBO-10817410
   manufacturer: ONSET
@@ -12,8 +103,50 @@ HOBO-10817496:
     en: Sensor
     fr: ''
   version: ''
+HOBO-20291425:
+  id: HOBO-20291425
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 HOBO-20291431:
   id: HOBO-20291431
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20291435:
+  id: HOBO-20291435
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20291440:
+  id: HOBO-20291440
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20291444:
+  id: HOBO-20291444
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20291445:
+  id: HOBO-20291445
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20291446:
+  id: HOBO-20291446
   manufacturer: ONSET
   type:
     en: Sensor
@@ -26,8 +159,92 @@ HOBO-20291470:
     en: Sensor
     fr: ''
   version: ''
+HOBO-20291475:
+  id: HOBO-20291475
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20291476:
+  id: HOBO-20291476
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20291477:
+  id: HOBO-20291477
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20291478:
+  id: HOBO-20291478
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20291479:
+  id: HOBO-20291479
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20291480:
+  id: HOBO-20291480
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20291488:
+  id: HOBO-20291488
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20308039:
+  id: HOBO-20308039
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 HOBO-20308042:
   id: HOBO-20308042
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20308044:
+  id: HOBO-20308044
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20308045:
+  id: HOBO-20308045
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20308047:
+  id: HOBO-20308047
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20308048:
+  id: HOBO-20308048
   manufacturer: ONSET
   type:
     en: Sensor
@@ -54,8 +271,64 @@ HOBO-20330413:
     en: Sensor
     fr: ''
   version: ''
+HOBO-20330416:
+  id: HOBO-20330416
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20330417:
+  id: HOBO-20330417
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20397530:
+  id: HOBO-20397530
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20397534:
+  id: HOBO-20397534
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 HOBO-20397535:
   id: HOBO-20397535
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20495219:
+  id: HOBO-20495219
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20495228:
+  id: HOBO-20495228
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20495235:
+  id: HOBO-20495235
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20495241:
+  id: HOBO-20495241
   manufacturer: ONSET
   type:
     en: Sensor
@@ -68,6 +341,41 @@ HOBO-20495242:
     en: Sensor
     fr: ''
   version: ''
+HOBO-20495245:
+  id: HOBO-20495245
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20495246:
+  id: HOBO-20495246
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20495247:
+  id: HOBO-20495247
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20495248:
+  id: HOBO-20495248
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+HOBO-20495249:
+  id: HOBO-20495249
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 HOBO-20495250:
   id: HOBO-20495250
   manufacturer: ONSET
@@ -75,8 +383,155 @@ HOBO-20495250:
     en: Sensor
     fr: ''
   version: ''
+HOBO-20495254:
+  id: HOBO-20495254
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+TidbiT-20395736:
+  id: TidbiT-20395736
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+TidbiT-20397527:
+  id: TidbiT-20397527
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+TidbiT-20405698:
+  id: TidbiT-20405698
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+TidbiT-20405699:
+  id: TidbiT-20405699
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+TidbiT-20405701:
+  id: TidbiT-20405701
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+TidbiT-20405704:
+  id: TidbiT-20405704
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+TidbiT-20405706:
+  id: TidbiT-20405706
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+TidbiT-20405708:
+  id: TidbiT-20405708
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+TidbiT-20405710:
+  id: TidbiT-20405710
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+TidbiT-20405711:
+  id: TidbiT-20405711
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+TidbiT-20405713:
+  id: TidbiT-20405713
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+TidbiT-20407505:
+  id: TidbiT-20407505
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+VR2AR-545760:
+  id: VR2AR-545760
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+VR2AR-545767:
+  id: VR2AR-545767
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 VR2AR-545777:
   id: VR2AR-545777
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+VR2AR-547088:
+  id: VR2AR-547088
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+VR2AR-547089:
+  id: VR2AR-547089
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+VR2AR-547090:
+  id: VR2AR-547090
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+VR2AR-547093:
+  id: VR2AR-547093
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+VR2AR-547100:
+  id: VR2AR-547100
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+VR2AR-547110:
+  id: VR2AR-547110
   manufacturer: Vemco
   type:
     en: Sensor
@@ -89,9 +544,65 @@ VR2AR-547111:
     en: Sensor
     fr: ''
   version: ''
+VR2AR-547232:
+  id: VR2AR-547232
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 VR2AR-548035:
   id: VR2AR-548035
   manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+VR2AR-548037:
+  id: VR2AR-548037
+  manufacturer: ''
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+VR2AR-548039:
+  id: VR2AR-548039
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+VR2AR-548040:
+  id: VR2AR-548040
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+VR2AR-548041:
+  id: VR2AR-548041
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+VR2AR-548044:
+  id: VR2AR-548044
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+VR2AR-548045:
+  id: VR2AR-548045
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-670350:
+  id: aquaMeasure-670350
+  manufacturer: Innovasea
   type:
     en: Sensor
     fr: ''
@@ -103,8 +614,99 @@ aquaMeasure-670351:
     en: Sensor
     fr: ''
   version: ''
+aquaMeasure-670357:
+  id: aquaMeasure-670357
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-670359:
+  id: aquaMeasure-670359
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-670363:
+  id: aquaMeasure-670363
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-670365:
+  id: aquaMeasure-670365
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-670367:
+  id: aquaMeasure-670367
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-670368:
+  id: aquaMeasure-670368
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 aquaMeasure-670372:
   id: aquaMeasure-670372
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-670373:
+  id: aquaMeasure-670373
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-670374:
+  id: aquaMeasure-670374
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-670375:
+  id: aquaMeasure-670375
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-670376:
+  id: aquaMeasure-670376
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-670377:
+  id: aquaMeasure-670377
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-670378:
+  id: aquaMeasure-670378
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-670379:
+  id: aquaMeasure-670379
   manufacturer: Innovasea
   type:
     en: Sensor
@@ -124,8 +726,78 @@ aquaMeasure-670381:
     en: Sensor
     fr: ''
   version: ''
+aquaMeasure-675008:
+  id: aquaMeasure-675008
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-675010:
+  id: aquaMeasure-675010
+  manufacturer: ''
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-675011:
+  id: aquaMeasure-675011
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-675015:
+  id: aquaMeasure-675015
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 aquaMeasure-675016:
   id: aquaMeasure-675016
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-675018:
+  id: aquaMeasure-675018
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-680154:
+  id: aquaMeasure-680154
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-680155:
+  id: aquaMeasure-680155
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-680156:
+  id: aquaMeasure-680156
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-680157:
+  id: aquaMeasure-680157
+  manufacturer: ''
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquaMeasure-680158:
+  id: aquaMeasure-680158
   manufacturer: Innovasea
   type:
     en: Sensor
