@@ -61,7 +61,7 @@ def generate_from_metadata(dataset_id):
 
     dict_file = {
         'metadata' : {
-            'naming_authority': 'ca.coos',
+            'naming_authority': 'ca.cioos',
             'identifier': str(uuid.uuid4()), 
             'language': lang,
             'maintenance_note':'Generated from https://cioos-siooc.github.io/metadata-entry-form',
