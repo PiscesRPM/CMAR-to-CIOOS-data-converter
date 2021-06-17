@@ -21,7 +21,7 @@ def get_variables(dataset_id):
     url = url + dataset_id
     return requests.get(url).json()
 
-def generate_from_metadata(dataset_id, df):
+def generate_from_metadata(dataset_id, df, data_file):
     metadata = get_metadata(dataset_id)
     description = get_variables(dataset_id)
     instruments = get_instruments(df)
@@ -117,7 +117,8 @@ def generate_from_metadata(dataset_id, df):
     add_variables(variable_list, dataset)
     tree = ET.ElementTree(dataset)
     ET.indent(tree)
-    tree.write('dataset.xml')
+
+    return tree
 
 def get_bbox(df):
     return [
@@ -181,7 +182,16 @@ def add_variables(variable_list, dataset):
 
 def main(dataset_id, data_file, outputFolder=None):
     df = pd.read_csv(data_file, parse_dates=['timestamp'])
-    metadata = generate_from_metadata(dataset_id, df)
+    metadata = generate_from_metadata(dataset_id, df, data_file)
+
+    base_filename = os.path.splitext(os.path.basename(data_file))[0]
+
+    xmlName = os.path.join(
+        outputFolder,
+        "%s.xml" % base_filename
+    )
+
+    metadata.write(xmlName)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
