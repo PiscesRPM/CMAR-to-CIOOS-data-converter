@@ -112,4 +112,6 @@ dependencies:
     - requests==2.25.1
     - sodapy==2.1.0
     - urllib3==1.26.4
+    - pyyaml==5.4.1
+    - tqdm==4.60.0
 prefix: /home/bcovey/miniconda3/envs/CMAR
