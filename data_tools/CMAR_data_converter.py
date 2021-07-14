@@ -5,15 +5,55 @@ from sodapy import Socrata
 from tqdm import tqdm
 import sys
 import argparse
+import yaml
 
 from . import util
 
+qualitative_values_config_file = 'qualitative_to_quantitative.yaml'
 
 def group_by_timestamp(df):
     pivot_index = ['waterbody', 'station', 'latitude', 'longitude', 
         'deployment_period', 'timestamp', 'sensor', 'depth']
     merged_df = df.pivot(index=pivot_index, columns='variable', values='value').reset_index()
     return merged_df
+
+def qualitative_to_quantitative(df):
+    df['depth'] = df['depth'].apply(pd.to_numeric, errors='ignore')
+    depths = df['depth'].unique()
+    print(depths)
+    
+    string_depths = []
+    for depth in depths:
+        if (isinstance(depth,str)):
+            string_depths.append(depth)
+    print (string_depths)
+
+    if os.path.exists(qualitative_values_config_file):
+            with open(qualitative_values_config_file) as f:
+                qualitative_values_config = yaml.load(f, Loader=yaml.FullLoader)
+    else:
+        qualitative_values_config = {}
+
+    stations = df['station'].unique()
+    for station in stations:
+        for depth in string_depths:
+            selector = (df['station'] == station) & (df['depth'] == depth)
+            affected_rows = df[selector]
+            if len(affected_rows) > 0:
+                if (station not in  qualitative_values_config):
+                    print("THIS IS THE DEPTH:",depth)
+                    raise Exception("Station: %s not found in qualitative values config: %s" % (station, qualitative_values_config_file))
+                else:
+                    station_config = qualitative_values_config[station]
+                    if (depth not in  station_config):
+                        raise Exception("Depth value: %s not found in qualitative values config: %s for station: %s" % (
+                            depth,
+                            qualitative_values_config_file,
+                            station
+                        ))
+                    else:
+                        df.loc[selector,('depth',)] = float(station_config[depth])
+    return df
 
 def split_deployment_period(df):
     new_df = pd.DataFrame()
@@ -46,6 +86,7 @@ def main(input_filename, output_directory):
     # Merge data based on waterbody, station, lease, latitude, longitude, deployment_period, timestamp, and sensor 
     merged_df = group_by_timestamp(df)
     merged_df = split_deployment_period(merged_df)
+    merged_df = qualitative_to_quantitative(merged_df)
     merged_df.to_csv(merged_output_filename, index=False)
     return merged_output_filename
     

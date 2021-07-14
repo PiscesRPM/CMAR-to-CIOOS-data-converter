@@ -28,7 +28,6 @@ def setup_raw_output_filename(dataset_output_directory, dataset_id):
 def main(output_directory, skip_fetch_data=False, skip_split_stations=False, skip_merge_data=False, skip_create_metadata=False, skip_create_datasetxml=False):
     # example list
     dataset_id_list = ['eb3n-uxcb','x9dy-aai9','adpu-nyt8','eda5-aubu','knwz-4bap','9qw2-yb2f','v6sa-tiit','wpsu-7fer','a9za-3t63']
-    # dataset_id_list = ['eb3n-uxcb','wpsu-7fer','a9za-3t63']
     for dataset_id in dataset_id_list:
         # Create a new folder inside of output_directory for each dataset
         dataset_output_directory = os.path.join(output_directory, dataset_id)
