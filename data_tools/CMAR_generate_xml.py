@@ -27,6 +27,9 @@ def generate_from_metadata(dataset_id, df, data_file):
     instruments = get_instruments(df)
     instruments = ','.join(instruments)
 
+
+    column_names = list(df.columns.values)
+
     lat_lon_spatial = get_bbox(df)
     vertical_spatial = get_vertical(df)
 
@@ -73,7 +76,7 @@ def generate_from_metadata(dataset_id, df, data_file):
     ET.SubElement(addAttributes, "att", name = "license").text = license
     ET.SubElement(addAttributes, "att", name = "sourceUrl").text = "(local files)"
     ET.SubElement(addAttributes, "att", name = "standard_name_vocabulary").text = "CF Standard Name Table v55" 
-    ET.SubElement(addAttributes, "att", name = "subsetVariables").text = "waterbody, station, lease" #ASK
+    ET.SubElement(addAttributes, "att", name = "subsetVariables").text = "waterbody, station, lease, sensors" #ASK
     ET.SubElement(addAttributes, "att", name = "contributor_name").text = publisher_name
     ET.SubElement(addAttributes, "att", name = "contributor_role").text = "owner"
     ET.SubElement(addAttributes, "att", name = "creator_email").text = publisher_email
@@ -114,7 +117,7 @@ def generate_from_metadata(dataset_id, df, data_file):
     variable_list.remove("value")
     variable_list.remove("variable")
 
-    add_variables(variable_list, dataset)
+    add_variables(variable_list, dataset, column_names)
     tree = ET.ElementTree(dataset)
     ET.indent(tree)
 
@@ -137,7 +140,7 @@ def get_vertical(df):
 def get_instruments(df):
     return df['sensor'].unique()
 
-def add_variables(variable_list, dataset):
+def add_variables(variable_list, dataset, merged_columns):
     if os.path.exists(variable_config_file):
         with open(variable_config_file) as f:
             variable_config = yaml.load(f, Loader=yaml.FullLoader)
@@ -145,8 +148,46 @@ def add_variables(variable_list, dataset):
         variable_config = {}
     
     new_variable_found = False
-    variable = []
-    for variable in variable_list:
+    # variable = []
+    # archived_vars = []
+    # same_variables = True
+    # for var in variable_config:
+    #     archived_vars.append(var)
+    # for variable in variable_list:
+    #     if variable not in archived_vars:
+    #         same_variables = False
+    #         break
+    # if same_variables == True:
+    #     variable_list = archived_vars
+    # print(variable_list)
+    # for variable in variable_list:
+    #     if variable not in variable_config:
+    #         variable_config[variable] = {
+    #             "destinationName": '',
+    #             "dataType": '',
+    #             "attributes": {
+    #                 "ioos_category": {
+    #                     "value" : '',
+    #                 },
+    #                 "long_name" : {
+    #                     "value" : '',
+    #                 },
+    #             },
+    #         }
+    #         new_variable_found = True
+    #     else:
+    #         dataVariable = ET.SubElement(dataset, "dataVariable")
+    #         ET.SubElement(dataVariable, "sourceName").text = variable
+    #         ET.SubElement(dataVariable, "destinationName").text = variable_config[variable]["destinationName"]
+    #         ET.SubElement(dataVariable, "dataType").text = variable_config[variable]["dataType"]
+    #         addAttributes = ET.SubElement(dataVariable, "addAttributes")
+    #         for k, v in variable_config[variable]["attributes"].items():
+    #             if "type" in variable_config[variable]["attributes"][k]:
+    #                 ET.SubElement(addAttributes, "att", type = variable_config[variable]["attributes"][k]["type"], name = k).text = variable_config[variable]["attributes"][k]["value"]
+    #             else:
+    #                 ET.SubElement(addAttributes, "att", name = k).text = variable_config[variable]["attributes"][k]["value"]
+
+    for variable in merged_columns:
         if variable not in variable_config:
             variable_config[variable] = {
                 "destinationName": '',
@@ -161,23 +202,26 @@ def add_variables(variable_list, dataset):
                 },
             }
             new_variable_found = True
-        else:
-            dataVariable = ET.SubElement(dataset, "dataVariable")
-            ET.SubElement(dataVariable, "sourceName").text = variable
-            ET.SubElement(dataVariable, "destinationName").text = variable_config[variable]["destinationName"]
-            ET.SubElement(dataVariable, "dataType").text = variable_config[variable]["dataType"]
-            addAttributes = ET.SubElement(dataVariable, "addAttributes")
-            for k, v in variable_config[variable]["attributes"].items():
-                if "type" in variable_config[variable]["attributes"][k]:
-                    ET.SubElement(addAttributes, "att", type = variable_config[variable]["attributes"][k]["type"], name = k).text = variable_config[variable]["attributes"][k]["value"]
-                else:
-                    ET.SubElement(addAttributes, "att", name = k).text = variable_config[variable]["attributes"][k]["value"]
 
-    
+        
     if new_variable_found:
         with open(variable_config_file, 'w') as f:
             yaml.dump(variable_config, f)
         raise Exception("New variables found, please update the following config file with additional information: %s" % variable_config_file)
+
+    merged_columns.sort()
+    
+    for variable in merged_columns:
+        dataVariable = ET.SubElement(dataset, "dataVariable")
+        ET.SubElement(dataVariable, "sourceName").text = variable
+        ET.SubElement(dataVariable, "destinationName").text = variable_config[variable]["destinationName"]
+        ET.SubElement(dataVariable, "dataType").text = variable_config[variable]["dataType"]
+        addAttributes = ET.SubElement(dataVariable, "addAttributes")
+        for k, v in variable_config[variable]["attributes"].items():
+            if "type" in variable_config[variable]["attributes"][k]:
+                ET.SubElement(addAttributes, "att", type = variable_config[variable]["attributes"][k]["type"], name = k).text = variable_config[variable]["attributes"][k]["value"]
+            else:
+                ET.SubElement(addAttributes, "att", name = k).text = variable_config[variable]["attributes"][k]["value"]
 
 
 def main(dataset_id, data_file, outputFolder=None):
