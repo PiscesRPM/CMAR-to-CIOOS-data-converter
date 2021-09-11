@@ -36,6 +36,14 @@ Temperature:
       value: Temperature
   dataType: float
   destinationName: Temperature
+deployment_end_date:
+  attributes:
+    ioos_category:
+      value: Unknown
+    long_name:
+      value: Deployment End Date
+  dataType: String
+  destinationName: deployment_end_date
 deployment_period:
   attributes:
     ioos_category:
@@ -44,6 +52,14 @@ deployment_period:
       value: Deployment Period
   dataType: String
   destinationName: deployment_period
+deployment_start_date:
+  attributes:
+    ioos_category:
+      value: Unknown
+    long_name:
+      value: Deployment Start Date
+  dataType: String
+  destinationName: deployment_start_date
 depth:
   attributes:
     colorBarMaximum:
@@ -137,9 +153,9 @@ timestamp:
     time_precision:
       value: '1970-01-01T00:00:00Z'
     units:
-      value: yyyy-MM-dd' 'HH:mm:ss
+      value: yyyy-MM-dd'T'HH:mm:ss.SSS 
   dataType: String
-  destinationName: time
+  destinationName: timestamp
 waterbody:
   attributes:
     ioos_category:
