@@ -76,7 +76,7 @@ def generate_from_metadata(dataset_id, df, data_file):
     ET.SubElement(addAttributes, "att", name = "license").text = license
     ET.SubElement(addAttributes, "att", name = "sourceUrl").text = "(local files)"
     ET.SubElement(addAttributes, "att", name = "standard_name_vocabulary").text = "CF Standard Name Table v55" 
-    ET.SubElement(addAttributes, "att", name = "subsetVariables").text = "waterbody, station, lease, sensors" #ASK
+    ET.SubElement(addAttributes, "att", name = "subsetVariables").text = "waterbody, station, lease, sensor" #ASK
     ET.SubElement(addAttributes, "att", name = "contributor_name").text = publisher_name
     ET.SubElement(addAttributes, "att", name = "contributor_role").text = "owner"
     ET.SubElement(addAttributes, "att", name = "creator_email").text = publisher_email
