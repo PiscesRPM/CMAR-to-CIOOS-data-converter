@@ -76,6 +76,13 @@ def setup_merged_output_filename(input_filename, output_directory):
     )
     return merged_output_filename
 
+def group_waterbody_station(merged_df):
+    merged_df['waterbody-station'] = merged_df['waterbody'] + '-' + merged_df['station']
+    merged_df = merged_df.drop(columns=['waterbody', 'station'])
+    cols = merged_df.columns.tolist()
+    cols = cols[-1:] + cols[:-1]
+    merged_df = merged_df[cols]
+
 def main(input_filename, output_directory):
     util.check_raw_file_extension(input_filename)
     
@@ -87,6 +94,7 @@ def main(input_filename, output_directory):
     merged_df = group_by_timestamp(df)
     merged_df = split_deployment_period(merged_df)
     merged_df = qualitative_to_quantitative(merged_df)
+    merged_df = group_waterbody_station(merged_df)
     merged_df.to_csv(merged_output_filename, index=False)
     return merged_output_filename
     
