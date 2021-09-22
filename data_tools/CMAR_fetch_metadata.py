@@ -40,8 +40,8 @@ def generate_from_metadata(dataset_id):
     else:
         lang = 'fr'
 
-    eovEN = ['subSurfaceSalinity','subSurfaceTemperature', 'dissolvedOrganicCarbon']
-    eovFR = ['Salinité sous la surface', 'Température sous la surface', 'carbone inorganique dissous']
+    eovEN = ['subSurfaceSalinity','subSurfaceTemperature', 'oxygen']
+    eovFR = ['Salinité sous la surface', 'Température sous la surface', 'oxygène']
     # temporal_begin = datetime.strptime(
     #     createDate,
     #     '%Y-%m-%dT%H:%M:%S+%f'
