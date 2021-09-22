@@ -83,6 +83,8 @@ def group_waterbody_station(merged_df):
     cols = cols[-1:] + cols[:-1]
     merged_df = merged_df[cols]
 
+    return merged_df
+
 def main(input_filename, output_directory):
     util.check_raw_file_extension(input_filename)
     

@@ -42,10 +42,10 @@ def generate_from_metadata(dataset_id):
 
     eovEN = ['subSurfaceSalinity','subSurfaceTemperature', 'dissolvedOrganicCarbon']
     eovFR = ['Salinité sous la surface', 'Température sous la surface', 'carbone inorganique dissous']
-    temporal_begin = datetime.strptime(
-        createDate,
-        '%Y-%m-%dT%H:%M:%S+%f'
-    )
+    # temporal_begin = datetime.strptime(
+    #     createDate,
+    #     '%Y-%m-%dT%H:%M:%S+%f'
+    # )
 
     distributions = distribution.split(" and ")
     dist = []
@@ -57,7 +57,7 @@ def generate_from_metadata(dataset_id):
         distAdd  = {'url': distURL, 'name':distName}
         dist.append(distAdd)
     #dist = [{'url': distURL, 'name':distName},{'url': distURL, 'name':distName}]
-
+    dist.append({'url': 'https://cioosatlantic.ca/erddap/tabledap/'+dataset_id+'.html', 'name':'ERDDAP Data Access'})
 
     dict_file = {
         'metadata' : {
@@ -109,7 +109,7 @@ def generate_from_metadata(dataset_id):
                     'fr':eovFR
                 }
             },
-            'temporal_begin': temporal_begin.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z',
+            # 'temporal_begin': temporal_begin.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z',
             'status': status,
             'progress_code': progress_code
         },
@@ -142,13 +142,18 @@ def get_vertical(df):
         float(df['depth'].max())
     ]
 
+def get_temporal_begin(df):
+    date = df['timestamp'].min()
+    date = date.strftime('%Y-%m-%dT%H:%M:%S.000Z')
+    return date
+
 def get_spatial(df):
     return {
         'bbox' : get_bbox(df), 'vertical' : get_vertical(df)
     }
 
 def get_instruments(df, platform):
-    return df[df['station'] == platform]['sensor'].unique()
+    return df[df['waterbody-station'] == platform]['sensor'].unique()
 
 def guess_manufacturer(instrument, instrument_config):
     partial_name = instrument.split('-')
@@ -159,12 +164,16 @@ def guess_manufacturer(instrument, instrument_config):
     return None
 
 def get_platforms(df):
-    platforms = df['station'].unique()
+    platforms = []
+    waterbody_platforms = df['waterbody-station'].unique()
+    for water_platform in waterbody_platforms:
+        platforms.append(water_platform.split('-',1)[1])
 
     platform_metadata = []
-
+    index = 0
     for platform in platforms:
-        instrument_list = get_instruments(df, platform)
+        instrument_list = get_instruments(df, waterbody_platforms[index])
+        index += 1
         if os.path.exists(sensor_config_file):
             with open(sensor_config_file) as f:
                 instrument_config = yaml.load(f, Loader=yaml.FullLoader)
@@ -215,7 +224,7 @@ def get_platforms(df):
 
 def generate_metadata_from_data(metadata, data_file):
     df = pd.read_csv(data_file, parse_dates=['timestamp'])
-
+    metadata['identification']['temporal_begin'] = get_temporal_begin(df)
     metadata['spatial'] = get_spatial(df)
 
     platform = get_platforms(df)
