@@ -40,12 +40,19 @@ def generate_from_metadata(dataset_id):
     else:
         lang = 'fr'
 
-    eovEN = ['subSurfaceSalinity','subSurfaceTemperature', 'oxygen']
-    eovFR = ['Salinité sous la surface', 'Température sous la surface', 'oxygène']
-    # temporal_begin = datetime.strptime(
-    #     createDate,
-    #     '%Y-%m-%dT%H:%M:%S+%f'
-    # )
+    #Creates an eovEN and eovFR with the preset eovs present in the 'tags' of the metadata. 
+    checkEOV = ['salinity','temperature','dissolved oxygen']
+    eovENList = ['Sub Surface Salinity','Sub Surface Temperature', 'Oxygen']
+    eovFRList = ['Salinité sous la surface', 'Température sous la surface', 'Oxygène']
+    eovEN = []
+    eovFR = []
+    for keyword in keywords:
+        count = 0
+        for eov in checkEOV:
+            if eov in keyword:
+                eovEN.append(eovENList[count])
+                eovFR.append(eovFRList[count])
+            count += 1
 
     distributions = distribution.split(" and ")
     dist = []
@@ -226,7 +233,6 @@ def generate_metadata_from_data(metadata, data_file):
     df = pd.read_csv(data_file, parse_dates=['timestamp'])
     metadata['identification']['temporal_begin'] = get_temporal_begin(df)
     metadata['spatial'] = get_spatial(df)
-
     platform = get_platforms(df)
     metadata["platform"] = platform
     return metadata

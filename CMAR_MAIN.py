@@ -38,7 +38,7 @@ def main(output_directory, skip_fetch_data=False, skip_split_stations=False, ski
             dataset_output_directory,
             dataset_id
         )
-        print(raw_output_filename)
+        
         if not(skip_fetch_data):
             CMAR_fetch_data.main(dataset_id, raw_output_filename)
 
