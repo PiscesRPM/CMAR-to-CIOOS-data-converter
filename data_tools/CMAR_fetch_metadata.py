@@ -160,7 +160,7 @@ def get_spatial(df):
     }
 
 def get_instruments(df, platform):
-    return df[df['waterbody-station'] == platform]['sensor'].unique()
+    return df[df['waterbody_station'] == platform]['sensor'].unique()
 
 def guess_manufacturer(instrument, instrument_config):
     partial_name = instrument.split('-')
@@ -172,7 +172,7 @@ def guess_manufacturer(instrument, instrument_config):
 
 def get_platforms(df):
     platforms = []
-    waterbody_platforms = df['waterbody-station'].unique()
+    waterbody_platforms = df['waterbody_station'].unique()
     for water_platform in waterbody_platforms:
         platforms.append(water_platform.split('-',1)[1])
 

@@ -164,11 +164,11 @@ waterbody:
       value: Waterbody
   dataType: String
   destinationName: waterbody
-waterbody-station:
+waterbody_station:
   attributes:
     ioos_category:
       value: Unknown
     long_name:
       value: Waterbody
   dataType: String
-  destinationName: waterbody-station
+  destinationName: waterbody_station
