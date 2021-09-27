@@ -8,7 +8,7 @@ import pandas as pd
 from xml.etree.ElementTree import ElementTree, tostring
 import xml.etree.cElementTree as ET
 
-variable_config_file = 'variables.yaml'
+variable_config_file = os.path.join(os.path.dirname(__file__), '..', 'variables.yaml')
 
 url = 'https://data.novascotia.ca/api/views/metadata/v1/x9dy-aai9'
 def get_metadata(dataset_id):

@@ -9,7 +9,7 @@ import yaml
 
 from . import util
 
-qualitative_values_config_file = 'qualitative_to_quantitative.yaml'
+qualitative_values_config_file = os.path.join(os.path.dirname(__file__), '..', 'qualitative_to_quantitative.yaml')
 
 def group_by_timestamp(df):
     pivot_index = ['waterbody', 'station', 'lease', 'latitude', 'longitude', 

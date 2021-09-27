@@ -6,7 +6,7 @@ from datetime import datetime
 import uuid
 import pandas as pd
 
-sensor_config_file = 'sensors.yaml'
+sensor_config_file = os.path.join(os.path.dirname(__file__), '..', 'sensors.yaml')
 
 def get_metadata(dataset_id):
     url = 'https://data.novascotia.ca/api/views/metadata/v1/'
