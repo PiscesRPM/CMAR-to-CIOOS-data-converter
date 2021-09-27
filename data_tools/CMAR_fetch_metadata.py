@@ -34,7 +34,7 @@ def generate_from_metadata(dataset_id):
     license = metadata['license']
 
     if (license != 'Nova Scotia Open Government Licence'):
-        raise Exception('License is not Nova Scotia Open Government License. \t Found License:%s' % license)
+        raise Exception('Licence is not Nova Scotia Open Government Licence. \t Found Licence:%s' % license)
 
     lang = 'en'
     if (language == 'eng'):
@@ -76,12 +76,12 @@ def generate_from_metadata(dataset_id):
             'maintenance_note':'Generated from https://cioos-siooc.github.io/metadata-entry-form',
             'use_constraints' : {
                 'limitations' : {
-                    'en' : "License",
-                    'fr' : "License",
+                    'en' : "Licence",
+                    'fr' : "Licence",
                 },
-                'license' : {
-                    'title' : 'Open Government License - Nova Scotia',
-                    'code' : 'government-open-license-nova-scotia',
+                'licence' : {
+                    'title' : 'Open Government Licence - Nova Scotia',
+                    'code' : 'OGL-NS-2.0',
                     'url' : 'https://novascotia.ca/opendata/licence.asp',
                 }
             },
