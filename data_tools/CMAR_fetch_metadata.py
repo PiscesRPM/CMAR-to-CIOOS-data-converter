@@ -20,6 +20,8 @@ def generate_from_metadata(dataset_id):
     createDate = metadata['createdAt'] #creattion + publication
     updateDate = metadata['dataUpdatedAt'] #revision
     description = metadata['customFields']['Detailed Metadata']['Usage Considerations'] #abstract:
+    description += 'Contains information licensed under the Open Government Licence – Nova Scotia. If you have accessed any of the Coastal Monitoring Program data, CMAR would appreciate your feedback through this quick '
+    description += '[questionaire](https://docs.google.com/forms/d/e/1FAIpQLSe3TD6umrsVVKnQL13VVMJIpckCi2ctONJsgN7_g-4c-tKTuw/viewform).'
     keywords = metadata['tags'] #keywords
     language = metadata['customFields']['Detailed Metadata']['Language']
     orgName = "Centre for Marine Applied Research (CMAR)"
@@ -160,7 +162,7 @@ def get_spatial(df):
     }
 
 def get_instruments(df, platform):
-    return df[df['waterbody-station'] == platform]['sensor'].unique()
+    return df[df['waterbody_station'] == platform]['sensor'].unique()
 
 def guess_manufacturer(instrument, instrument_config):
     partial_name = instrument.split('-')
@@ -172,7 +174,7 @@ def guess_manufacturer(instrument, instrument_config):
 
 def get_platforms(df):
     platforms = []
-    waterbody_platforms = df['waterbody-station'].unique()
+    waterbody_platforms = df['waterbody_station'].unique()
     for water_platform in waterbody_platforms:
         platforms.append(water_platform.split('-',1)[1])
 
