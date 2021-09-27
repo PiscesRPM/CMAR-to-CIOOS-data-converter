@@ -76,7 +76,7 @@ def generate_from_metadata(dataset_id, df, data_file):
     ET.SubElement(addAttributes, "att", name = "license").text = license
     ET.SubElement(addAttributes, "att", name = "sourceUrl").text = "(local files)"
     ET.SubElement(addAttributes, "att", name = "standard_name_vocabulary").text = "CF Standard Name Table v55" 
-    ET.SubElement(addAttributes, "att", name = "subsetVariables").text = "waterbody, station, lease, sensor" #ASK
+    ET.SubElement(addAttributes, "att", name = "subsetVariables").text = "waterbody_station, lease, sensor" #ASK
     ET.SubElement(addAttributes, "att", name = "contributor_name").text = publisher_name
     ET.SubElement(addAttributes, "att", name = "contributor_role").text = "owner"
     ET.SubElement(addAttributes, "att", name = "creator_email").text = publisher_email
@@ -148,44 +148,6 @@ def add_variables(variable_list, dataset, merged_columns):
         variable_config = {}
     
     new_variable_found = False
-    # variable = []
-    # archived_vars = []
-    # same_variables = True
-    # for var in variable_config:
-    #     archived_vars.append(var)
-    # for variable in variable_list:
-    #     if variable not in archived_vars:
-    #         same_variables = False
-    #         break
-    # if same_variables == True:
-    #     variable_list = archived_vars
-    # print(variable_list)
-    # for variable in variable_list:
-    #     if variable not in variable_config:
-    #         variable_config[variable] = {
-    #             "destinationName": '',
-    #             "dataType": '',
-    #             "attributes": {
-    #                 "ioos_category": {
-    #                     "value" : '',
-    #                 },
-    #                 "long_name" : {
-    #                     "value" : '',
-    #                 },
-    #             },
-    #         }
-    #         new_variable_found = True
-    #     else:
-    #         dataVariable = ET.SubElement(dataset, "dataVariable")
-    #         ET.SubElement(dataVariable, "sourceName").text = variable
-    #         ET.SubElement(dataVariable, "destinationName").text = variable_config[variable]["destinationName"]
-    #         ET.SubElement(dataVariable, "dataType").text = variable_config[variable]["dataType"]
-    #         addAttributes = ET.SubElement(dataVariable, "addAttributes")
-    #         for k, v in variable_config[variable]["attributes"].items():
-    #             if "type" in variable_config[variable]["attributes"][k]:
-    #                 ET.SubElement(addAttributes, "att", type = variable_config[variable]["attributes"][k]["type"], name = k).text = variable_config[variable]["attributes"][k]["value"]
-    #             else:
-    #                 ET.SubElement(addAttributes, "att", name = k).text = variable_config[variable]["attributes"][k]["value"]
 
     for variable in merged_columns:
         if variable not in variable_config:
@@ -209,7 +171,31 @@ def add_variables(variable_list, dataset, merged_columns):
             yaml.dump(variable_config, f)
         raise Exception("New variables found, please update the following config file with additional information: %s" % variable_config_file)
 
-    merged_columns.sort()
+    # Get the columns in a nice order
+    sorted_columns = []
+    if("waterbody_station" in merged_columns):
+        sorted_columns.append("waterbody_station")
+    if("lease" in merged_columns):
+        sorted_columns.append("lease")
+    if("latitude" in merged_columns):
+        sorted_columns.append("latitude")
+    if("longitude" in merged_columns):
+        sorted_columns.append("longitude")
+    if("deployment_start_date" in merged_columns):
+        sorted_columns.append("deployment_start_date")
+    if("deployment_end_date" in merged_columns):
+        sorted_columns.append("deployment_end_date")
+    if("timestamp" in merged_columns):
+        sorted_columns.append("timestamp")
+    if("depth" in merged_columns):
+        sorted_columns.append("depth")
+    if("sensor" in merged_columns):
+        sorted_columns.append("sensor")
+    
+    for col in merged_columns:
+        if col not in sorted_columns:
+            sorted_columns.append(col)
+    merged_columns = sorted_columns
     
     for variable in merged_columns:
         dataVariable = ET.SubElement(dataset, "dataVariable")
@@ -239,7 +225,6 @@ def main(dataset_id, data_file, outputFolder=None):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    # args = sys.argv[1:]
     parser.add_argument("SetID", type=str,
                     help="Dataset ID")
     parser.add_argument("dataFile", type=str, help="Corresponding data file")

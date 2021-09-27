@@ -15,6 +15,8 @@ Dissolved Oxygen:
       value: Volume Fraction Of Oxygen In Sea Water
     standard_name:
       value: volume_fraction_of_oxygen_in_sea_water
+    units:
+      value: '% saturation'
   dataType: float
   destinationName: Dissolved_Oxygen
 Salinity:
@@ -23,6 +25,8 @@ Salinity:
       value: Salinity
     long_name:
       value: Volume Fraction Of Salinity In Sea Water
+    units:
+      value: practical salinity units
   dataType: float
   destinationName: Salinity
 Temperature:
@@ -34,6 +38,8 @@ Temperature:
       value: Temperature
     long_name:
       value: Temperature
+    units:
+      value: degrees Celsius
   dataType: float
   destinationName: Temperature
 deployment_end_date:
@@ -164,11 +170,11 @@ waterbody:
       value: Waterbody
   dataType: String
   destinationName: waterbody
-waterbody-station:
+waterbody_station:
   attributes:
     ioos_category:
       value: Unknown
     long_name:
       value: Waterbody
   dataType: String
-  destinationName: waterbody-station
+  destinationName: waterbody_station

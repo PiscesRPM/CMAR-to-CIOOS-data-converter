@@ -20,13 +20,11 @@ def group_by_timestamp(df):
 def qualitative_to_quantitative(df):
     df['depth'] = df['depth'].apply(pd.to_numeric, errors='ignore')
     depths = df['depth'].unique()
-    print(depths)
     
     string_depths = []
     for depth in depths:
         if (isinstance(depth,str)):
             string_depths.append(depth)
-    print (string_depths)
 
     if os.path.exists(qualitative_values_config_file):
             with open(qualitative_values_config_file) as f:
@@ -77,7 +75,7 @@ def setup_merged_output_filename(input_filename, output_directory):
     return merged_output_filename
 
 def group_waterbody_station(merged_df):
-    merged_df['waterbody-station'] = merged_df['waterbody'] + '-' + merged_df['station']
+    merged_df['waterbody_station'] = merged_df['waterbody'] + '-' + merged_df['station']
     merged_df = merged_df.drop(columns=['waterbody', 'station'])
     cols = merged_df.columns.tolist()
     cols = cols[-1:] + cols[:-1]
