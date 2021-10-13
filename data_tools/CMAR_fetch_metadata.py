@@ -4,6 +4,7 @@ import os
 import yaml
 from datetime import datetime
 import uuid
+import hashlib
 import pandas as pd
 
 sensor_config_file = os.path.join(os.path.dirname(__file__), '..', 'sensors.yaml')
@@ -71,7 +72,7 @@ def generate_from_metadata(dataset_id):
     dict_file = {
         'metadata' : {
             'naming_authority': 'ca.cioos',
-            'identifier': str(uuid.uuid4()), 
+            'identifier': str(uuid.uuid3(uuid.UUID(bytes=hashlib.md5(b"CMAR").digest()), dataset_id)), 
             'language': lang,
             'maintenance_note':'Generated from https://cioos-siooc.github.io/metadata-entry-form',
             'use_constraints' : {
