@@ -12,8 +12,12 @@ from . import util
 qualitative_values_config_file = os.path.join(os.path.dirname(__file__), '..', 'qualitative_to_quantitative.yaml')
 
 def group_by_timestamp(df):
-    pivot_index = ['waterbody', 'station', 'lease', 'latitude', 'longitude', 
-        'deployment_period', 'timestamp', 'sensor', 'depth', 'mooring']
+    if 'mooring' in df.columns:
+        pivot_index = ['waterbody', 'station', 'lease', 'latitude', 'longitude', 
+            'deployment_period', 'timestamp', 'sensor', 'depth', 'mooring']
+    else:
+        pivot_index = ['waterbody', 'station', 'lease', 'latitude', 'longitude', 
+            'deployment_period', 'timestamp', 'sensor', 'depth']
     merged_df = df.pivot(index=pivot_index, columns='variable', values='value').reset_index()
     return merged_df
 
