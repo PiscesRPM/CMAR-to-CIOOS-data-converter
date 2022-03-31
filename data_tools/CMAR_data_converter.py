@@ -18,7 +18,16 @@ def group_by_timestamp(df):
     else:
         pivot_index = ['waterbody', 'station', 'lease', 'latitude', 'longitude', 
             'deployment_period', 'timestamp', 'sensor', 'depth']
-    merged_df = df.pivot(index=pivot_index, columns='variable', values='value').reset_index()
+    merged_df = df.pivot(index=pivot_index, columns=['variable', 'units'], values='value').reset_index()
+    for col in merged_df:
+        if len(col) < 2:
+            merged_df.rename(columns={col: col[0]}, inplace=True)
+        else:
+            if col[1] == '':
+                merged_df.rename(columns={col: col[0]}, inplace=True)
+
+        print(col)
+    print(merged_df)
     return merged_df
 
 def qualitative_to_quantitative(df):
