@@ -14,7 +14,7 @@ def fetch_data(dataset_id, output_filename):
     Returns:
         pandas.DataFrame: A Pandas DataFrame containing the retreived data
     """    
-    limit = 6000000
+    limit = 60000000
     client = Socrata("data.novascotia.ca", 'cx4XloH6tDgX8ZhFFmtAuxtMc')
 
     results = None
