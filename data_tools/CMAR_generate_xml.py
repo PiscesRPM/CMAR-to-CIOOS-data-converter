@@ -102,20 +102,23 @@ def generate_from_metadata(dataset_id, df, data_file):
     datatypes = description['results'][0]['resource']['columns_datatype']
     variable_descriptions = description['results'][0]['resource']['columns_description']
     variable_list = fields_names
-    for i in range(len(fields_names)):
-        if (fields_names[i] == "value"):
-            variables =  (variable_descriptions[i].split("(")[1])[:-1].split(",")
-            variables[len(variables)-1] = variables[len(variables)-1][5:]
-            for variable in variables:
-                variable = variable.split(" for ")
-                units = variable[0]
-                var_name = variable[1]
-                variable_list.append(var_name)
-        elif(fields_names[i] == "variable"):
-            pass
+    # TODO: replace this old way of doing things:
+    # for i in range(len(fields_names)):
+    #     if (fields_names[i] == "value"):
+    #         variables =  (variable_descriptions[i].split("(")[1])[:-1].split(",")
+    #         variables[len(variables)-1] = variables[len(variables)-1][5:]
+    #         for variable in variables:
+    #             variable = variable.split(" for ")
+    #             units = variable[0]
+    #             var_name = variable[1]
+    #             variable_list.append(var_name)
+    #     elif(fields_names[i] == "variable"):
+    #         pass
     
-    variable_list.remove("value")
-    variable_list.remove("variable")
+    # variable_list.remove("value")
+    # variable_list.remove("variable")
+
+    # TODO: write code that opens the final output, parses the column names and creates a structure: variable_list = [(var_name, units),(var_name, units),(var_name, units)]
 
     add_variables(variable_list, dataset, column_names)
     tree = ET.ElementTree(dataset)
@@ -141,6 +144,8 @@ def get_instruments(df):
     return df['sensor'].unique()
 
 def add_variables(variable_list, dataset, merged_columns):
+    # TODO: update this function so that it understand the new variable_list format([(variable_name, units),(variable_name, units)])
+    # Make sure the function uses the units from the variable_list
     if os.path.exists(variable_config_file):
         with open(variable_config_file) as f:
             variable_config = yaml.load(f, Loader=yaml.FullLoader)
