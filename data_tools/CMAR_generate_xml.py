@@ -133,7 +133,7 @@ def extract_variables(df):
        'deployment_start_date', 'deployment_end_date', 'timestamp', 'sensor',
        'depth', 'mooring']
 
-    variable_list = []
+    variable_list = {}
     
     for col in df.columns:
         if col in ignored_columns:
@@ -141,7 +141,7 @@ def extract_variables(df):
         else:
             split_col = col.split("_")
             if len(split_col) > 1:
-                variable_list.append(split_col)
+                variable_list[col] = split_col
     
     return variable_list
 
