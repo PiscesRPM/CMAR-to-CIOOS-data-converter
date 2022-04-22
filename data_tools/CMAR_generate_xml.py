@@ -187,6 +187,15 @@ def add_variables(variable_list, dataset, merged_columns):
                     },
                 },
             }
+            
+            if variable in variable_list:
+                variable_config[variable]["attributes"]["units"] = {
+                    "value": variable_list[variable][1]
+                }
+                variable_config[variable]["attributes"]["ioos_category"]["value"] = variable_list[variable][0] 
+                variable_config[variable]["attributes"]["long_name"]["value"] = variable_list[variable][0] 
+                variable_config[variable]["dataType"] = "float"
+                variable_config[variable]["destinationName"] = variable
             new_variable_found = True
 
         
