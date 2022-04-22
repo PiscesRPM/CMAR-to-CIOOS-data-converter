@@ -119,12 +119,31 @@ def generate_from_metadata(dataset_id, df, data_file):
     # variable_list.remove("variable")
 
     # TODO: write code that opens the final output, parses the column names and creates a structure: variable_list = [(var_name, units),(var_name, units),(var_name, units)]
+    
+    variable_list = extract_variables(df)
 
     add_variables(variable_list, dataset, column_names)
     tree = ET.ElementTree(dataset)
     ET.indent(tree)
 
     return tree
+
+def extract_variables(df):
+    ignored_columns = ['waterbody_station', 'lease', 'latitude', 'longitude',
+       'deployment_start_date', 'deployment_end_date', 'timestamp', 'sensor',
+       'depth', 'mooring']
+
+    variable_list = []
+    
+    for col in df.columns:
+        if col in ignored_columns:
+            pass
+        else:
+            split_col = col.split("_")
+            if len(split_col) > 1:
+                variable_list.append(split_col)
+    
+    return variable_list
 
 def get_bbox(df):
     return [
