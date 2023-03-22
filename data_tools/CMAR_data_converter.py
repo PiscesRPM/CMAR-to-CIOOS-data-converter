@@ -75,7 +75,7 @@ def split_deployment_period(df):
 
     for col in df:
         if col == 'deployment_period':
-            deployment_dates = df[col].unique()[0].split(' to ',1)
+            deployment_dates = df[col].str.split(' to ', 1, expand = True)
             new_df['deployment_start_date'] = deployment_dates[0]
             new_df['deployment_end_date'] = deployment_dates[1]
         else:
@@ -92,7 +92,7 @@ def setup_merged_output_filename(input_filename, output_directory):
     return merged_output_filename
 
 def group_waterbody_station(merged_df):
-    merged_df['waterbody_station'] = merged_df['waterbody'] + '-' + merged_df['station']
+    merged_df['waterbody_station'] = merged_df['waterbody'] + '-' + merged_df['station'].astype(str)
     merged_df = merged_df.drop(columns=['waterbody', 'station'])
     cols = merged_df.columns.tolist()
     cols = cols[-1:] + cols[:-1]
