@@ -6,6 +6,8 @@ from tqdm import tqdm
 import sys
 import argparse
 import yaml
+import calendar
+import datetime
 
 from . import util
 
@@ -72,12 +74,12 @@ def qualitative_to_quantitative(df):
 
 def split_deployment_period(df):
     new_df = pd.DataFrame()
-
+    
     for col in df:
         if col == 'deployment_period':
             deployment_dates = df[col].str.split(' to ', 1, expand = True)
-            new_df['deployment_start_date'] = deployment_dates[0]
-            new_df['deployment_end_date'] = deployment_dates[1]
+            new_df['deployment_start_date'] = pd.to_datetime(deployment_dates[0], format='%Y-%b-%d')
+            new_df['deployment_end_date'] = pd.to_datetime(deployment_dates[1], format='%Y-%b-%d')
         else:
             new_df[col] = df[col]
     return new_df
