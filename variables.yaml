@@ -19,6 +19,36 @@ Dissolved Oxygen:
       value: '% saturation'
   dataType: float
   destinationName: Dissolved_Oxygen
+Dissolved Oxygen_mg/L:
+  attributes:
+    ioos_category:
+      value: Dissolved Oxygen
+    long_name:
+      value: Dissolved Oxygen
+    units:
+      value: mg/L
+  dataType: float
+  destinationName: Dissolved Oxygen_mg/L
+Dissolved Oxygen_nan:
+  attributes:
+    ioos_category:
+      value: Dissolved Oxygen
+    long_name:
+      value: Dissolved Oxygen
+    units:
+      value: nan
+  dataType: float
+  destinationName: Dissolved Oxygen_nan
+Dissolved Oxygen_percent saturation:
+  attributes:
+    ioos_category:
+      value: Dissolved Oxygen
+    long_name:
+      value: Dissolved Oxygen
+    units:
+      value: percent saturation
+  dataType: float
+  destinationName: Dissolved Oxygen_percent saturation
 Salinity:
   attributes:
     ioos_category:
@@ -29,6 +59,26 @@ Salinity:
       value: practical salinity units
   dataType: float
   destinationName: Salinity
+Salinity_nan:
+  attributes:
+    ioos_category:
+      value: Salinity
+    long_name:
+      value: Salinity
+    units:
+      value: nan
+  dataType: float
+  destinationName: Salinity_nan
+Salinity_practical salinity units:
+  attributes:
+    ioos_category:
+      value: Salinity
+    long_name:
+      value: Salinity
+    units:
+      value: practical salinity units
+  dataType: float
+  destinationName: Salinity_practical salinity units
 Temperature:
   attributes:
     _FillValue:
@@ -42,6 +92,26 @@ Temperature:
       value: degrees Celsius
   dataType: float
   destinationName: Temperature
+Temperature_degrees Celsius:
+  attributes:
+    ioos_category:
+      value: Temperature
+    long_name:
+      value: Temperature
+    units:
+      value: degrees Celsius
+  dataType: float
+  destinationName: Temperature_degrees Celsius
+Temperature_nan:
+  attributes:
+    ioos_category:
+      value: Temperature
+    long_name:
+      value: Temperature
+    units:
+      value: nan
+  dataType: float
+  destinationName: Temperature_nan
 deployment_end_date:
   attributes:
     ioos_category:
@@ -130,6 +200,14 @@ longitude:
       value: degrees_east
   dataType: float
   destinationName: longitude
+mooring:
+  attributes:
+    ioos_category:
+      value: ''
+    long_name:
+      value: ''
+  dataType: ''
+  destinationName: ''
 sensor:
   attributes:
     ioos_category:
