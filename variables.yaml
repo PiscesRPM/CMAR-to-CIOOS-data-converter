@@ -156,6 +156,42 @@ depth:
       value: m
   dataType: byte
   destinationName: depth
+depth_crosscheck_flag:
+  attributes:
+    ancillary_variables:
+      value: sensor_depth_at_low_tide_m
+    ioos_category:
+      value: Quality
+    long_name:
+      value: Depth Crosscheck Flag
+    standard_name:
+      value: quality_flag
+  dataType: String
+  destinationName: depth_crosscheck_flag
+dissolved_oxygen_percent_saturation:
+  attributes:
+    ioos_category:
+      value: Dissolved O2
+    long_name:
+      value: Volume Fraction Of Oxygen In Sea Water
+    standard_name:
+      value: volume_fraction_of_oxygen_in_sea_water
+    units:
+      value: '% saturation'
+  dataType: float
+  destinationName: dissolved_oxygen
+dissolved_oxygen_uncorrected_mg_per_l:
+  attributes:
+    ioos_category:
+      value: Dissolved O2
+    long_name:
+      value: Mass Concentration of Oxygen in Sea Water
+    standard_name:
+      value: mass_concentration_of_oxygen_in_sea_water
+    units:
+      value: mg/L
+  dataType: float
+  destinationName: dissolved_oxygen_uncorrected
 latitude:
   attributes:
     colorBarMaximum:
@@ -182,6 +218,14 @@ lease:
       value: Lease
   dataType: String
   destinationName: lease
+lease_number:
+  attributes:
+    ioos_category:
+      value: Unknown
+    long_name:
+      value: Lease Number
+  dataType: String
+  destinationName: lease_number
 longitude:
   attributes:
     colorBarMaximum:
@@ -200,6 +244,16 @@ longitude:
       value: degrees_east
   dataType: float
   destinationName: longitude
+measured_sensor_depth_m:
+  attributes:
+    ioos_category:
+      value: Location
+    long_name:
+      value: Measured Sensor Depth
+    units:
+      value: m
+  dataType: float
+  destinationName: measured_sensor_depth
 mooring:
   attributes:
     ioos_category:
@@ -208,6 +262,76 @@ mooring:
       value: ''
   dataType: ''
   destinationName: ''
+qc_flag_dissolved_oxygen_percent_saturation:
+  attributes:
+    ancillary_variables:
+      value: dissolved_oxygen_percent_saturation
+    ioos_category:
+      value: Quality
+    long_name:
+      value: 'Quality Flag for Parameter: Dissolved Oxygen'
+    standard_name:
+      value: quality_flag
+  dataType: String
+  destinationName: qc_flag_dissolved_oxygen
+qc_flag_dissolved_oxygen_uncorrected_mg_per_l:
+  attributes:
+    ancillary_variables:
+      value: dissolved_oxygen_uncorrected_mg_per_l
+    ioos_category:
+      value: Quality
+    long_name:
+      value: 'Quality Flag for Parameter: Dissolved Oxygen Uncorrected'
+    standard_name:
+      value: quality_flag
+  dataType: String
+  destinationName: qc_flag_dissolved_oxygen_uncorrected
+qc_flag_salinity_psu:
+  attributes:
+    ancillary_variables:
+      value: salinity_psu
+    ioos_category:
+      value: Quality
+    long_name:
+      value: 'Quality Flag for Parameter: Salinity'
+    standard_name:
+      value: quality_flag
+  dataType: String
+  destinationName: qc_flag_salinity
+qc_flag_sensor_depth_measured_m:
+  attributes:
+    ancillary_variables:
+      value: sensor_depth_measured_m
+    ioos_category:
+      value: Quality
+    long_name:
+      value: 'Quality Flag for Parameter: Sensor Depth Measured'
+    standard_name:
+      value: quality_flag
+  dataType: String
+  destinationName: qc_flag_sensor_depth_measured
+qc_flag_temperature_degree_c:
+  attributes:
+    ancillary_variables:
+      value: temperature_degree_c
+    ioos_category:
+      value: Quality
+    long_name:
+      value: 'Quality Flag for Parameter: Temperature'
+    standard_name:
+      value: quality_flag
+  dataType: String
+  destinationName: qc_flag_temperature
+salinity_psu:
+  attributes:
+    ioos_category:
+      value: Salinity
+    long_name:
+      value: Salinity
+    units:
+      value: PSU
+  dataType: float
+  destinationName: salinity
 sensor:
   attributes:
     ioos_category:
@@ -216,6 +340,50 @@ sensor:
       value: Sensor
   dataType: String
   destinationName: sensor
+sensor_depth_at_low_tide_m:
+  attributes:
+    colorBarMaximum:
+      type: double
+      value: '8000.0'
+    colorBarMinimum:
+      type: double
+      value: '-8000.0'
+    ioos_category:
+      value: Location
+    long_name:
+      value: Sensor depth at low tide
+    standard_name:
+      value: depth
+    units:
+      value: m
+  dataType: float
+  destinationName: depth
+sensor_depth_measured_m:
+  attributes:
+    ioos_category:
+      value: sensor
+    long_name:
+      value: sensor
+    units:
+      value: depth
+  dataType: float
+  destinationName: sensor_depth_measured_m
+sensor_serial_number:
+  attributes:
+    ioos_category:
+      value: Unknown
+    long_name:
+      value: Sensor Serial Number
+  dataType: String
+  destinationName: sensor_serial_number
+sensor_type:
+  attributes:
+    ioos_category:
+      value: Unknown
+    long_name:
+      value: Sensor Type
+  dataType: String
+  destinationName: sensor_type
 station:
   attributes:
     ioos_category:
@@ -224,6 +392,26 @@ station:
       value: Station
   dataType: String
   destinationName: station
+string_configuration:
+  attributes:
+    ioos_category:
+      value: Unknown
+    long_name:
+      value: String Configuration
+  dataType: String
+  destinationName: string_configuration
+temperature_degree_c:
+  attributes:
+    ioos_category:
+      value: Temperature
+    long_name:
+      value: Sea Water Temperature
+    standard_name:
+      value: sea_water_temperature
+    units:
+      value: degrees_Celsius
+  dataType: float
+  destinationName: temperature
 timestamp:
   attributes:
     ioos_category:
@@ -232,6 +420,22 @@ timestamp:
       value: Timestamp
     source_name:
       value: timestamp
+    standard_name:
+      value: time
+    time_precision:
+      value: '1970-01-01T00:00:00Z'
+    units:
+      value: yyyy-MM-dd'T'HH:mm:ss.SSS
+  dataType: String
+  destinationName: time
+timestamp_utc:
+  attributes:
+    ioos_category:
+      value: Time
+    long_name:
+      value: Timestamp
+    source_name:
+      value: timestamp_utc
     standard_name:
       value: time
     time_precision:
