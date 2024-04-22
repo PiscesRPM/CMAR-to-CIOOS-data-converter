@@ -20,16 +20,19 @@ def fetch_data(dataset_id, output_filename):
     results = None
     existing_df = None
     if os.path.exists(output_filename):
-        existing_df = pd.read_csv(output_filename, parse_dates=['timestamp'])
-        max_date = existing_df['timestamp'].max()
+        existing_df = pd.read_csv(output_filename, parse_dates=['timestamp_utc'])
+        max_date = existing_df['timestamp_utc'].max()
         max_date_string = max_date.strftime('%Y-%m-%dT%H:%M:%S.%f')
-        results = client.get(dataset_id, where="timestamp > \"%s\"" % max_date_string, limit=limit)
+        results = client.get(dataset_id, where="timestamp_utc > \"%s\"" % max_date_string, limit=limit)
     else:
         results = client.get(dataset_id, limit=limit)
 
     # Convert to pandas DataFrame
     results_df = pd.DataFrame.from_records(results)
 
+    # Some fields from API will end with _, use below to strip
+    results_df = results_df.rename(columns=lambda x: x.strip('_'))
+    
     new_rows = len(results_df)
     if existing_df is not None:
         results_df = results_df.append(existing_df)

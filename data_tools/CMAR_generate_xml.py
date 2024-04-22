@@ -61,8 +61,8 @@ def generate_from_metadata(dataset_id, df, data_file):
     ET.SubElement(dataset, "columnSeparator").text = ","
     ET.SubElement(dataset, "columnNamesRow").text = "1"
     ET.SubElement(dataset, "firstDataRow").text = "2"
-    ET.SubElement(dataset, "sortedColumnSourceName").text = "timestamp"
-    ET.SubElement(dataset, "sortFilesBySourceNames").text = "timestamp"
+    ET.SubElement(dataset, "sortedColumnSourceName").text = "timestamp_utc"
+    ET.SubElement(dataset, "sortFilesBySourceNames").text = "timestamp_utc"
     ET.SubElement(dataset, "fileTableInMemory").text = "false"
     ET.SubElement(dataset, "accessibleViaFiles").text = "true"
 
@@ -76,7 +76,7 @@ def generate_from_metadata(dataset_id, df, data_file):
     ET.SubElement(addAttributes, "att", name = "license").text = license
     ET.SubElement(addAttributes, "att", name = "sourceUrl").text = "(local files)"
     ET.SubElement(addAttributes, "att", name = "standard_name_vocabulary").text = "CF Standard Name Table v55" 
-    ET.SubElement(addAttributes, "att", name = "subsetVariables").text = "waterbody_station, lease, sensor" #ASK
+    ET.SubElement(addAttributes, "att", name = "subsetVariables").text = "waterbody_station, lease_number, sensor_type, sensor_serial_number, qc_flag_dissolved_oxygen_percent_saturation, qc_flag_temperature, qc_flag_salinity, depth_crosscheck_flag, qc_flag_sensor_depth_measured" #ASK
     ET.SubElement(addAttributes, "att", name = "contributor_name").text = publisher_name
     ET.SubElement(addAttributes, "att", name = "contributor_role").text = "owner"
     ET.SubElement(addAttributes, "att", name = "creator_email").text = publisher_email
@@ -125,13 +125,12 @@ def generate_from_metadata(dataset_id, df, data_file):
     add_variables(variable_list, dataset, column_names)
     tree = ET.ElementTree(dataset)
     ET.indent(tree)
-
     return tree
 
 def extract_variables(df):
     ignored_columns = ['waterbody_station', 'lease', 'latitude', 'longitude',
-       'deployment_start_date', 'deployment_end_date', 'timestamp', 'sensor',
-       'depth', 'mooring']
+       'deployment_start_date', 'deployment_end_date', 'timestamp_utc', 'sensor_type', 'sensor_serial_number',
+       'sensor_depth_at_low_tide_m', 'mooring']
 
     variable_list = {}
     
@@ -155,12 +154,12 @@ def get_bbox(df):
 
 def get_vertical(df):
     return [
-        float(df['depth'].max()),
-        float(df['depth'].min()),
+        float(df['sensor_depth_at_low_tide_m'].max()),
+        float(df['sensor_depth_at_low_tide_m'].min()),
     ]
 
 def get_instruments(df):
-    return df['sensor'].unique()
+    return df.apply(lambda x:'%s-%s' % (x['sensor_type'],x['sensor_serial_number']),axis=1).unique()
 
 def add_variables(variable_list, dataset, merged_columns):
     # TODO: update this function so that it understand the new variable_list format([(variable_name, units),(variable_name, units)])
@@ -218,10 +217,10 @@ def add_variables(variable_list, dataset, merged_columns):
         sorted_columns.append("deployment_start_date")
     if("deployment_end_date" in merged_columns):
         sorted_columns.append("deployment_end_date")
-    if("timestamp" in merged_columns):
-        sorted_columns.append("timestamp")
-    if("depth" in merged_columns):
-        sorted_columns.append("depth")
+    if("timestamp_utc" in merged_columns):
+        sorted_columns.append("timestamp_utc")
+    if("sensor_depth_at_low_tide_m" in merged_columns):
+        sorted_columns.append("sensor_depth_at_low_tide_m")
     if("sensor" in merged_columns):
         sorted_columns.append("sensor")
     
@@ -244,7 +243,7 @@ def add_variables(variable_list, dataset, merged_columns):
 
 
 def main(dataset_id, data_file, outputFolder=None):
-    df = pd.read_csv(data_file, parse_dates=['timestamp'])
+    df = pd.read_csv(data_file, parse_dates=['timestamp_utc'])
     metadata = generate_from_metadata(dataset_id, df, data_file)
 
     base_filename = os.path.splitext(os.path.basename(data_file))[0]

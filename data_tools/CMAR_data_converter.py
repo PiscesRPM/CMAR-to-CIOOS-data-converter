@@ -37,8 +37,8 @@ def group_by_timestamp(df):
     return merged_df
 
 def qualitative_to_quantitative(df):
-    df['depth'] = df['depth'].apply(pd.to_numeric, errors='ignore')
-    depths = df['depth'].unique()
+    df['sensor_depth_at_low_tide_m'] = df['sensor_depth_at_low_tide_m'].apply(pd.to_numeric, errors='ignore')
+    depths = df['sensor_depth_at_low_tide_m'].unique()
     
     string_depths = []
     for depth in depths:
@@ -69,14 +69,14 @@ def qualitative_to_quantitative(df):
                             station
                         ))
                     else:
-                        df.loc[selector,('depth',)] = float(station_config[depth])
+                        df.loc[selector,('sensor_depth_at_low_tide_m',)] = float(station_config[depth])
     return df
 
 def split_deployment_period(df):
     new_df = pd.DataFrame()
     
     for col in df:
-        if col == 'deployment_period':
+        if col == 'deployment_range':
             deployment_dates = df[col].str.split(' to ', 1, expand = True)
             new_df['deployment_start_date'] = pd.to_datetime(deployment_dates[0], format='%Y-%b-%d')
             new_df['deployment_end_date'] = pd.to_datetime(deployment_dates[1], format='%Y-%b-%d')
@@ -109,9 +109,10 @@ def main(input_filename, output_directory):
     
     merged_output_filename = setup_merged_output_filename(input_filename, output_directory)
 
-    # Merge data based on waterbody, station, lease, latitude, longitude, deployment_period, timestamp, and sensor 
-    merged_df = group_by_timestamp(df)
-    merged_df = split_deployment_period(merged_df)
+    # Merge data based on waterbody, station, lease, latitude, longitude, deployment_period, timestamp, and sensor
+    # Changed to be pre-grouped in new format 
+    # merged_df = group_by_timestamp(df)
+    merged_df = split_deployment_period(df)
     merged_df = qualitative_to_quantitative(merged_df)
     merged_df = group_waterbody_station(merged_df)
     merged_df.to_csv(merged_output_filename, index=False)
