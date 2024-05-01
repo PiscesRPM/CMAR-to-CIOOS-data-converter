@@ -114,7 +114,8 @@ def main(input_filename, output_directory):
     # merged_df = group_by_timestamp(df)
     merged_df = split_deployment_period(df)
     merged_df = qualitative_to_quantitative(merged_df)
-    merged_df = group_waterbody_station(merged_df)
+    #Removed grouping waterbody and station together
+    #merged_df = group_waterbody_station(merged_df)
     merged_df.to_csv(merged_output_filename, index=False)
     return merged_output_filename
     
