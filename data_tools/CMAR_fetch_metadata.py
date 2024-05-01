@@ -26,8 +26,8 @@ def generate_from_metadata(dataset_id):
     createDate = metadata['createdAt'] #creattion + publication
     updateDate = metadata['dataUpdatedAt'] #revision
     description = metadata['customFields']['Detailed Metadata']['Usage Considerations'] #abstract:
-    description += 'Contains information licensed under the Open Government Licence – Nova Scotia. If you have accessed any of the Coastal Monitoring Program data, CMAR would appreciate your feedback through this quick '
-    description += '[questionaire](https://docs.google.com/forms/d/e/1FAIpQLSe3TD6umrsVVKnQL13VVMJIpckCi2ctONJsgN7_g-4c-tKTuw/viewform).'
+    #description += 'Contains information licensed under the Open Government Licence – Nova Scotia. If you have accessed any of the Coastal Monitoring Program data, CMAR would appreciate your feedback through this quick '
+    #description += '[questionaire](https://docs.google.com/forms/d/e/1FAIpQLSe3TD6umrsVVKnQL13VVMJIpckCi2ctONJsgN7_g-4c-tKTuw/viewform).'
     keywords = metadata['tags'] #keywords
     language = metadata['customFields']['Detailed Metadata']['Language']
     orgName = "Centre for Marine Applied Research (CMAR)"
@@ -181,7 +181,8 @@ def get_spatial(df):
 
 def get_instruments(df, platform):
     #df[df['waterbody_station'] == platform].drop_duplicates(['sensor_type', 'sensor_serial_number'])[['sensor_type','sensor_serial_number']]
-    return df[df['waterbody_station'] == platform]['sensor'].unique()
+    #return df[df['waterbody_station'] == platform]['sensor'].unique()
+    return df[df['station'] == platform]['sensor'].unique()
 
 def guess_manufacturer(instrument, instrument_config):
     partial_name = instrument.split('-')
@@ -192,16 +193,13 @@ def guess_manufacturer(instrument, instrument_config):
     return None
 
 def get_platforms(df):
-    platforms = []
-    waterbody_platforms = df['waterbody_station'].unique()
-    for water_platform in waterbody_platforms:
-        platforms.append(water_platform.split('-',1)[1])
+    platforms = df['station'].unique()
 
     platform_metadata = []
     index = 0
     df['sensor'] = df.apply(lambda x:'%s-%s' % (x['sensor_type'],x['sensor_serial_number']),axis=1)
     for platform in platforms:
-        instrument_list = get_instruments(df, waterbody_platforms[index])
+        instrument_list = get_instruments(df, platforms[index])
         index += 1
         if os.path.exists(sensor_config_file):
             with open(sensor_config_file) as f:
