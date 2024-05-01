@@ -53,7 +53,7 @@ def generate_from_metadata(dataset_id, df, data_file):
     ET.SubElement(dataset, "updateEveryNMillis").text = "10000"
     #ET.SubElement(dataset, "fileDir").text = "/datasets/cmar/"
     #ET.SubElement(dataset, "fileNameRegex").text = ".*merged\.csv"
-    ET.SubElement(dataset, "fileDir").text = "/datasets/cmar/nsodp-sensor-strings/" + str(dataset_id)
+    ET.SubElement(dataset, "fileDir").text = "/datasets/cmar/nsodp-sensor-strings/" + str(dataset_id) + "/final_output"
     ET.SubElement(dataset, "fileNameRegex").text = ".*[0-9][0-9]\.csv"
     ET.SubElement(dataset, "recursive").text = "true"
     ET.SubElement(dataset, "pathRegex").text = ".*"
@@ -74,7 +74,7 @@ def generate_from_metadata(dataset_id, df, data_file):
     ET.SubElement(addAttributes, "att", name = "Conventions").text = "COARDS, CF-1.6, ACDD-1.3"
     ET.SubElement(addAttributes, "att", name = "creator_name").text = creator_name
     ET.SubElement(addAttributes, "att", name = "creator_type").text = 'institution'
-    ET.SubElement(addAttributes, "att", name = "infoUrl").text = '???'
+    ET.SubElement(addAttributes, "att", name = "infoUrl").text = 'https://cmar.ca/coastal-monitoring-program/'
     ET.SubElement(addAttributes, "att", name = "institution").text = creator_name
     ET.SubElement(addAttributes, "att", name = "license").text = license
     ET.SubElement(addAttributes, "att", name = "sourceUrl").text = "(local files)"
@@ -244,14 +244,38 @@ def add_variables(variable_list, dataset, merged_columns):
         sorted_columns.append("deployment_start_date")
     if("deployment_end_date" in merged_columns):
         sorted_columns.append("deployment_end_date")
+    if("string_configuration" in merged_columns):
+        sorted_columns.append("string_configuration")
+    if("sensor_type" in merged_columns):
+        sorted_columns.append("sensor_type")
+    if("sensor_serial_number" in merged_columns):
+        sorted_columns.append("sensor_serial_number")  
     if("timestamp_utc" in merged_columns):
         sorted_columns.append("timestamp_utc")
     if("sensor_depth_at_low_tide_m" in merged_columns):
         sorted_columns.append("sensor_depth_at_low_tide_m")
-    if("sensor_type" in merged_columns):
-        sorted_columns.append("sensor_type")
-    if("sensor_serial_number" in merged_columns):
-        sorted_columns.append("sensor_serial_number")
+    if("depth_crosscheck_flag" in merged_columns):
+        sorted_columns.append("depth_crosscheck_flag")
+    if("dissolved_oxygen_percent_saturation" in merged_columns):
+        sorted_columns.append("dissolved_oxygen_percent_saturation")
+    if("dissolved_oxygen_uncorrected_mg_per_l" in merged_columns):
+        sorted_columns.append("dissolved_oxygen_uncorrected_mg_per_l")
+    if("salinity_psu" in merged_columns):
+        sorted_columns.append("salinity_psu")
+    if("sensor_depth_measured_m" in merged_columns):
+        sorted_columns.append("sensor_depth_measured_m")
+    if("temperature_degree_c" in merged_columns):
+        sorted_columns.append("temperature_degree_c")
+    if("qc_flag_dissolved_oxygen_percent_saturation" in merged_columns):
+        sorted_columns.append("qc_flag_dissolved_oxygen_percent_saturation")
+    if("qc_flag_dissolved_oxygen_uncorrected_mg_per_l" in merged_columns):
+        sorted_columns.append("qc_flag_dissolved_oxygen_uncorrected_mg_per_l")
+    if("qc_flag_salinity_psu" in merged_columns):
+        sorted_columns.append("qc_flag_salinity_psu")
+    if("qc_flag_sensor_depth_measured_m" in merged_columns):
+        sorted_columns.append("qc_flag_sensor_depth_measured_m")
+    if("qc_flag_temperature_degree_c" in merged_columns):
+        sorted_columns.append("qc_flag_temperature_degree_c")
     
     for col in merged_columns:
         if col not in sorted_columns:
