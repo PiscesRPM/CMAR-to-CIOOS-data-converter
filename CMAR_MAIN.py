@@ -30,9 +30,12 @@ def main(output_directory, skip_fetch_data=False, skip_split_stations=False, ski
     #dataset_id_list = ['eb3n-uxcb','x9dy-aai9','adpu-nyt8','eda5-aubu','knwz-4bap','9qw2-yb2f','v6sa-tiit','a9za-3t63','mq2k-54s4', 'wpsu-7fer']
     
     # To update as datasets are updated to new structure
-    #'eb3n-uxcb', 'eda5-aubu'
-    #dataset_id_list = ['5daj-5icy', '9qw2-yb2f', 'adpu-nyt8', 'a9za-3t63','gfri-gzxa', 'mq2k-54s4', 'kgdu-nqdp', 'knwz-4bap', 'qspp-qhb6', 't2ms-7jgj', 'wpsu-7fer', 'x9dy-aai9']
-    dataset_id_list = ['mq2k-54s4']
+
+    # Datasets too big to grab, crashes when trying to make a dataframe
+    #'eb3n-uxcb', 'eda5-aubu''mq2k-54s4',
+
+    dataset_id_list = ['5daj-5icy', '9qw2-yb2f', 'a9za-3t63','adpu-nyt8','gfri-gzxa', 'kgdu-nqdp', 'knwz-4bap','qspp-qhb6', 't2ms-7jgj', 'v6sa-tiit', 'wpsu-7fer', 'x9dy-aai9']
+    #dataset_id_list = ['x9dy-aai9']
     for dataset_id in dataset_id_list:
         # Create a new folder inside of output_directory for each dataset
         dataset_output_directory = os.path.join(output_directory, dataset_id)
