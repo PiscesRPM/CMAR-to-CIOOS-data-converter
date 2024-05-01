@@ -387,7 +387,7 @@ sensor_depth_measured_m:
     units:
       value: m
   dataType: float
-  destinationName: sensor_depth_measured_m
+  destinationName: sensor_depth_measured
 sensor_serial_number:
   attributes:
     ioos_category:
