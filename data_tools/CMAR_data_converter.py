@@ -8,10 +8,12 @@ import argparse
 import yaml
 import calendar
 import datetime
+import csv
 
 from . import util
 
 qualitative_values_config_file = os.path.join(os.path.dirname(__file__), '..', 'qualitative_to_quantitative.yaml')
+dtype_config_file = os.path.join(os.path.dirname(__file__), '..', 'data_types.yaml')
 
 def group_by_timestamp(df):
     if 'mooring' in df.columns:
@@ -104,9 +106,28 @@ def group_waterbody_station(merged_df):
 
 def main(input_filename, output_directory):
     util.check_raw_file_extension(input_filename)
-    
-    df = pd.read_csv(input_filename)
-    
+
+    # Code copied from fetch metdata to reduce dataframe memory load
+    # TODO: Move to util
+    dtypes= {}
+    dataset_columns = None
+    with open(input_filename, 'r') as f:
+        dataset_columns = csv.DictReader(f).fieldnames
+
+    if os.path.exists(dtype_config_file):
+        with open(dtype_config_file) as f:
+            dtypes_config = yaml.load(f, Loader=yaml.FullLoader)
+            for col in dataset_columns:
+                if col in dtypes_config:
+                    dtypes[col] = dtypes_config[col]
+    else:
+        print("No dtype config found") 
+
+    # Can't specify datetime as a dtype when importing so temporarily pop it out
+    timestamp_dtype = dtypes.pop('timestamp_utc')
+    df = pd.read_csv(input_filename, parse_dates=['timestamp_utc'], dtype=dtypes)
+    print(df.info())
+
     merged_output_filename = setup_merged_output_filename(input_filename, output_directory)
 
     # Merge data based on waterbody, station, lease, latitude, longitude, deployment_period, timestamp, and sensor
