@@ -28,7 +28,6 @@ def fetch_data(dataset_id, output_filename):
     client = Socrata("data.novascotia.ca", 'cx4XloH6tDgX8ZhFFmtAuxtMc')
     client.timeout = 30
 
-    dtypes= {}
     dtypes_config = {}
     if os.path.exists(dtype_config_file):
         with open(dtype_config_file) as f:
@@ -45,18 +44,14 @@ def fetch_data(dataset_id, output_filename):
             print("Getting more data from client. Current rows in dataset is " + str(len(existing_df)))
             results = client.get(dataset_id, order="timestamp_utc,sensor_type,sensor_serial_number", limit=limit, offset=offset)
         elif os.path.exists(output_filename):
-            if not dtypes:
-                with open(output_filename, 'r') as f:
-                    dataset_columns = csv.DictReader(f).fieldnames
-                    print(dataset_columns)
-                    for col in dataset_columns:
-                        if col in dtypes_config:
-                            dtypes[col] = dtypes_config[col]
-            
-            # Can't specify datetime as a dtype when importing so temporarily pop it out
-            timestamp_dtype = dtypes.pop('timestamp_utc')
-            existing_df = pd.read_csv(output_filename, parse_dates=['timestamp_utc'], dtype=dtypes)
-            dtypes['timestamp_utc'] = timestamp_dtype
+            with open(output_filename, 'r') as f:
+                dataset_columns = csv.DictReader(f).fieldnames
+                existing_dtypes= {}
+                # Check column types from csv data - ignore timestamp as it must be read separately
+                for col in dataset_columns:
+                    if col in dtypes_config and not dtypes_config[col]=='datetime64[ns]':
+                        existing_dtypes[col] = dtypes_config[col]
+            existing_df = pd.read_csv(output_filename, parse_dates=['timestamp_utc'], dtype=existing_dtypes)
             offset = len(existing_df)
             results = client.get(dataset_id, order="timestamp_utc,sensor_type,sensor_serial_number", limit=limit, offset=offset)
             
@@ -77,15 +72,16 @@ def fetch_data(dataset_id, output_filename):
         
         # Output the unmerged data if desired
         if new_rows > 0:
-            if not dtypes:
-                for col in results_df.columns:
-                    if col in dtypes_config:
-                        dtypes[col] = dtypes_config[col]
+            dtypes= {}
+            # Headers can change depending on whether the variables exist in the data section
+            # Need to recheck every query to be safe
+            for col in results_df.columns:
+                if col in dtypes_config:
+                    dtypes[col] = dtypes_config[col]
             results_df = results_df.astype(dtype=dtypes)
 
             print("Found new data, writing to raw file: %s" % output_filename)
             if existing_df is not None:
-                existing_df = existing_df.astype(dtype=dtypes)
                 results_df = existing_df.append(results_df).astype(dtype=dtypes)
 
             results_df.to_csv(output_filename, index=False)
@@ -96,7 +92,6 @@ def fetch_data(dataset_id, output_filename):
                 print("Data limit hit. Calling client again")
                 offset = len(results_df)
                 existing_df = results_df
-                #results_df = fetch_data(dataset_id, output_filename, offset=len(results_df), existing_df=results_df)
         else:
             print("No new data found, proceeding with data from: %s" % output_filename)
             more_data = False
