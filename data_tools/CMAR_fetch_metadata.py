@@ -6,8 +6,10 @@ from datetime import datetime
 import uuid
 import hashlib
 import pandas as pd
+import csv
 
 sensor_config_file = os.path.join(os.path.dirname(__file__), '..', 'sensors.yaml')
+dtype_config_file = os.path.join(os.path.dirname(__file__), '..', 'data_types.yaml')
 
 def get_metadata(dataset_id):
     url = 'https://data.novascotia.ca/api/views/metadata/v1/'
@@ -250,7 +252,19 @@ def get_platforms(df):
         return platform_metadata
 
 def generate_metadata_from_data(metadata, data_file):
-    df = pd.read_csv(data_file, parse_dates=['timestamp_utc'])
+    dtypes= {}
+    dataset_columns = ['waterbody','station','latitude','longitude','sensor_type','sensor_serial_number','timestamp_utc', 'sensor_depth_at_low_tide_m']
+
+    if os.path.exists(dtype_config_file):
+        with open(dtype_config_file) as f:
+            dtypes_config = yaml.load(f, Loader=yaml.FullLoader)
+            for col in dataset_columns:
+                if col in dtypes_config and not dtypes_config[col]=='datetime64[ns]':
+                    dtypes[col] = dtypes_config[col]
+    else:
+        print("No dtype config found") 
+
+    df = pd.read_csv(data_file, usecols=dataset_columns, parse_dates=['timestamp_utc'], dtype=dtypes)
     metadata['identification']['temporal_begin'] = get_temporal_begin(df)
     metadata['spatial'] = get_spatial(df)
     platform = get_platforms(df)
@@ -260,7 +274,6 @@ def generate_metadata_from_data(metadata, data_file):
 def main(dataset_id, data_file, output_directory):
     metadata = generate_from_metadata(dataset_id)
     updated_metadata = generate_metadata_from_data(metadata, data_file)
-    
     base_filename = os.path.splitext(os.path.basename(data_file))[0]
 
     yamlName = os.path.join(

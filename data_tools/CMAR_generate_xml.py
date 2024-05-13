@@ -7,8 +7,10 @@ import uuid
 import pandas as pd
 from xml.etree.ElementTree import ElementTree, tostring
 import xml.etree.cElementTree as ET
+import csv
 
 variable_config_file = os.path.join(os.path.dirname(__file__), '..', 'variables.yaml')
+dtype_config_file = os.path.join(os.path.dirname(__file__), '..', 'data_types.yaml')
 
 url = 'https://data.novascotia.ca/api/views/metadata/v1/x9dy-aai9'
 def get_metadata(dataset_id):
@@ -21,17 +23,27 @@ def get_variables(dataset_id):
     url = url + dataset_id
     return requests.get(url).json()
 
-def generate_from_metadata(dataset_id, df, data_file):
+def generate_from_metadata(dataset_id,data_file):
+    instrument_columns =["sensor_type", "sensor_serial_number"]
+    dtypes={}
+    for col in instrument_columns:
+        dtypes[col]= 'category'
+    instrument_df = pd.read_csv(data_file, usecols= instrument_columns, dtype=dtypes)
     metadata = get_metadata(dataset_id)
     description = get_variables(dataset_id)
-    instruments = get_instruments(df)
+    instruments = get_instruments(instrument_df)
     instruments = ','.join(instruments)
 
+    with open(data_file, 'r') as f:
+        column_names = csv.DictReader(f).fieldnames
 
-    column_names = list(df.columns.values)
-
-    lat_lon_spatial = get_bbox(df)
-    vertical_spatial = get_vertical(df)
+    spatial_columns =["latitude",'longitude','sensor_depth_at_low_tide_m']
+    dtypes={}
+    for col in spatial_columns:
+        dtypes[col]= 'float'
+    spatial_df = pd.read_csv(data_file, usecols= spatial_columns, dtype=dtypes)
+    lat_lon_spatial = get_bbox(spatial_df)
+    vertical_spatial = get_vertical(spatial_df)
 
     title = metadata['name'] #title
     date_created = metadata['createdAt'] #creattion + publication
@@ -144,7 +156,7 @@ def generate_from_metadata(dataset_id, df, data_file):
 
     # TODO: write code that opens the final output, parses the column names and creates a structure: variable_list = [(var_name, units),(var_name, units),(var_name, units)]
     
-    variable_list = extract_variables(df)
+    variable_list = extract_variables(column_names)
 
     add_variables(variable_list, dataset, column_names)
     
@@ -152,14 +164,14 @@ def generate_from_metadata(dataset_id, df, data_file):
     ET.indent(tree)
     return tree
 
-def extract_variables(df):
+def extract_variables(data_columns):
     ignored_columns = ['waterbody', 'station', 'lease', 'latitude', 'longitude',
        'deployment_start_date', 'deployment_end_date', 'timestamp_utc', 'sensor_type', 'sensor_serial_number',
        'sensor_depth_at_low_tide_m', 'mooring']
 
     variable_list = {}
     
-    for col in df.columns:
+    for col in data_columns:
         if col in ignored_columns:
             pass
         else:
@@ -296,8 +308,7 @@ def add_variables(variable_list, dataset, merged_columns):
 
 
 def main(dataset_id, data_file, outputFolder=None):
-    df = pd.read_csv(data_file, parse_dates=['timestamp_utc'])
-    metadata = generate_from_metadata(dataset_id, df, data_file)
+    metadata = generate_from_metadata(dataset_id, data_file)
 
     base_filename = os.path.splitext(os.path.basename(data_file))[0]
 
