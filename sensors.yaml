@@ -2511,8 +2511,22 @@ hobo-21083052:
     en: Sensor
     fr: ''
   version: ''
+hobo-21152399:
+  id: hobo-21152399
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 hobo-21152400:
   id: hobo-21152400
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21152407:
+  id: hobo-21152407
   manufacturer: ONSET
   type:
     en: Sensor
@@ -2555,6 +2569,27 @@ hobo-21152426:
   version: ''
 hobo-21152432:
   id: hobo-21152432
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21155068:
+  id: hobo-21155068
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21155090:
+  id: hobo-21155090
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21309145:
+  id: hobo-21309145
   manufacturer: ONSET
   type:
     en: Sensor
@@ -2623,8 +2658,22 @@ hobo-21429532:
     en: Sensor
     fr: ''
   version: ''
+hobo-21429533:
+  id: hobo-21429533
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 hobo-21434534:
   id: hobo-21434534
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21434535:
+  id: hobo-21434535
   manufacturer: ONSET
   type:
     en: Sensor
@@ -2637,6 +2686,20 @@ hobo-21444909:
     en: Sensor
     fr: ''
   version: ''
+hobo-21465745:
+  id: hobo-21465745
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21465746:
+  id: hobo-21465746
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 hobo-21465757:
   id: hobo-21465757
   manufacturer: ONSET
@@ -2644,8 +2707,113 @@ hobo-21465757:
     en: Sensor
     fr: ''
   version: ''
+hobo-21465762:
+  id: hobo-21465762
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21465779:
+  id: hobo-21465779
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21465783:
+  id: hobo-21465783
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21465790:
+  id: hobo-21465790
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21465794:
+  id: hobo-21465794
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21465795:
+  id: hobo-21465795
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21465797:
+  id: hobo-21465797
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21465801:
+  id: hobo-21465801
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21465806:
+  id: hobo-21465806
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21488192:
+  id: hobo-21488192
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21488193:
+  id: hobo-21488193
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 hobo-21488194:
   id: hobo-21488194
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21488195:
+  id: hobo-21488195
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21488196:
+  id: hobo-21488196
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21488197:
+  id: hobo-21488197
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21488198:
+  id: hobo-21488198
   manufacturer: ONSET
   type:
     en: Sensor
@@ -2660,6 +2828,104 @@ tidbit-20397521:
   version: ''
 tidbit-20397522:
   id: tidbit-20397522
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+tidbit-20397527:
+  id: tidbit-20397527
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+tidbit-20397530:
+  id: tidbit-20397530
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+tidbit-20397534:
+  id: tidbit-20397534
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+tidbit-20397535:
+  id: tidbit-20397535
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+tidbit-20397536:
+  id: tidbit-20397536
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+tidbit-20405698:
+  id: tidbit-20405698
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+tidbit-20405699:
+  id: tidbit-20405699
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+tidbit-20405701:
+  id: tidbit-20405701
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+tidbit-20405704:
+  id: tidbit-20405704
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+tidbit-20405705:
+  id: tidbit-20405705
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+tidbit-20405706:
+  id: tidbit-20405706
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+tidbit-20405708:
+  id: tidbit-20405708
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+tidbit-20405711:
+  id: tidbit-20405711
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+tidbit-20405713:
+  id: tidbit-20405713
   manufacturer: ONSET
   type:
     en: Sensor
@@ -2917,8 +3183,22 @@ vr2ar-548045:
     en: Sensor
     fr: ''
   version: ''
+vr2ar-548585:
+  id: vr2ar-548585
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 vr2ar-548589:
   id: vr2ar-548589
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-548603:
+  id: vr2ar-548603
   manufacturer: Vemco
   type:
     en: Sensor
@@ -3008,6 +3288,13 @@ vr2ar-551261:
     en: Sensor
     fr: ''
   version: ''
+vr2ar-551262:
+  id: vr2ar-551262
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 vr2ar-551263:
   id: vr2ar-551263
   manufacturer: Vemco
@@ -3024,6 +3311,13 @@ vr2ar-551264:
   version: ''
 vr2ar-600015:
   id: vr2ar-600015
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-600016:
+  id: vr2ar-600016
   manufacturer: Vemco
   type:
     en: Sensor
