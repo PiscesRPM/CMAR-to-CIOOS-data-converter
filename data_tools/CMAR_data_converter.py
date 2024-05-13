@@ -126,7 +126,6 @@ def main(input_filename, output_directory):
     # Can't specify datetime as a dtype when importing so temporarily pop it out
     timestamp_dtype = dtypes.pop('timestamp_utc')
     df = pd.read_csv(input_filename, parse_dates=['timestamp_utc'], dtype=dtypes)
-    print(df.info())
 
     merged_output_filename = setup_merged_output_filename(input_filename, output_directory)
 
