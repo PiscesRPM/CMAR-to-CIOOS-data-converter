@@ -558,6 +558,13 @@ aquameasure-671137:
     en: Sensor
     fr: ''
   version: ''
+aquameasure-671185:
+  id: aquameasure-671185
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 aquameasure-671186:
   id: aquameasure-671186
   manufacturer: Innovasea
@@ -572,8 +579,50 @@ aquameasure-671187:
     en: Sensor
     fr: ''
   version: ''
+aquameasure-671188:
+  id: aquameasure-671188
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquameasure-671304:
+  id: aquameasure-671304
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquameasure-671305:
+  id: aquameasure-671305
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquameasure-671308:
+  id: aquameasure-671308
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 aquameasure-671312:
   id: aquameasure-671312
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquameasure-671318:
+  id: aquameasure-671318
+  manufacturer: Innovasea
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+aquameasure-671331:
+  id: aquameasure-671331
   manufacturer: Innovasea
   type:
     en: Sensor
@@ -2525,6 +2574,13 @@ hobo-21152400:
     en: Sensor
     fr: ''
   version: ''
+hobo-21152401:
+  id: hobo-21152401
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 hobo-21152407:
   id: hobo-21152407
   manufacturer: ONSET
@@ -2588,8 +2644,29 @@ hobo-21155090:
     en: Sensor
     fr: ''
   version: ''
+hobo-21309144:
+  id: hobo-21309144
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 hobo-21309145:
   id: hobo-21309145
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21414851:
+  id: hobo-21414851
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21414864:
+  id: hobo-21414864
   manufacturer: ONSET
   type:
     en: Sensor
@@ -2679,6 +2756,34 @@ hobo-21434535:
     en: Sensor
     fr: ''
   version: ''
+hobo-21434539:
+  id: hobo-21434539
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21434542:
+  id: hobo-21434542
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21444877:
+  id: hobo-21444877
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21444892:
+  id: hobo-21444892
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 hobo-21444909:
   id: hobo-21444909
   manufacturer: ONSET
@@ -2714,6 +2819,20 @@ hobo-21465762:
     en: Sensor
     fr: ''
   version: ''
+hobo-21465763:
+  id: hobo-21465763
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21465772:
+  id: hobo-21465772
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 hobo-21465779:
   id: hobo-21465779
   manufacturer: ONSET
@@ -2723,6 +2842,13 @@ hobo-21465779:
   version: ''
 hobo-21465783:
   id: hobo-21465783
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21465789:
+  id: hobo-21465789
   manufacturer: ONSET
   type:
     en: Sensor
@@ -2765,6 +2891,20 @@ hobo-21465801:
   version: ''
 hobo-21465806:
   id: hobo-21465806
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21465809:
+  id: hobo-21465809
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21473802:
+  id: hobo-21473802
   manufacturer: ONSET
   type:
     en: Sensor
@@ -2814,6 +2954,118 @@ hobo-21488197:
   version: ''
 hobo-21488198:
   id: hobo-21488198
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21650142:
+  id: hobo-21650142
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21650143:
+  id: hobo-21650143
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21650144:
+  id: hobo-21650144
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21650145:
+  id: hobo-21650145
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21650146:
+  id: hobo-21650146
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21650147:
+  id: hobo-21650147
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21650148:
+  id: hobo-21650148
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21650149:
+  id: hobo-21650149
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21650150:
+  id: hobo-21650150
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21650151:
+  id: hobo-21650151
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21927294:
+  id: hobo-21927294
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21927301:
+  id: hobo-21927301
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21927308:
+  id: hobo-21927308
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21927327:
+  id: hobo-21927327
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21981721:
+  id: hobo-21981721
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21981722:
+  id: hobo-21981722
   manufacturer: ONSET
   type:
     en: Sensor
@@ -3183,6 +3435,90 @@ vr2ar-548045:
     en: Sensor
     fr: ''
   version: ''
+vr2ar-548555:
+  id: vr2ar-548555
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-548559:
+  id: vr2ar-548559
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-548562:
+  id: vr2ar-548562
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-548563:
+  id: vr2ar-548563
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-548564:
+  id: vr2ar-548564
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-548566:
+  id: vr2ar-548566
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-548568:
+  id: vr2ar-548568
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-548571:
+  id: vr2ar-548571
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-548573:
+  id: vr2ar-548573
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-548574:
+  id: vr2ar-548574
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-548575:
+  id: vr2ar-548575
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-548579:
+  id: vr2ar-548579
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 vr2ar-548585:
   id: vr2ar-548585
   manufacturer: Vemco
@@ -3190,8 +3526,50 @@ vr2ar-548585:
     en: Sensor
     fr: ''
   version: ''
+vr2ar-548586:
+  id: vr2ar-548586
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-548588:
+  id: vr2ar-548588
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 vr2ar-548589:
   id: vr2ar-548589
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-548593:
+  id: vr2ar-548593
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-548597:
+  id: vr2ar-548597
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-548599:
+  id: vr2ar-548599
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-548600:
+  id: vr2ar-548600
   manufacturer: Vemco
   type:
     en: Sensor
@@ -3304,6 +3682,34 @@ vr2ar-551263:
   version: ''
 vr2ar-551264:
   id: vr2ar-551264
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-600008:
+  id: vr2ar-600008
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-600009:
+  id: vr2ar-600009
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-600010:
+  id: vr2ar-600010
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-600013:
+  id: vr2ar-600013
   manufacturer: Vemco
   type:
     en: Sensor
