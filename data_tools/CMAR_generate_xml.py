@@ -7,8 +7,10 @@ import uuid
 import pandas as pd
 from xml.etree.ElementTree import ElementTree, tostring
 import xml.etree.cElementTree as ET
+import csv
 
 variable_config_file = os.path.join(os.path.dirname(__file__), '..', 'variables.yaml')
+dtype_config_file = os.path.join(os.path.dirname(__file__), '..', 'data_types.yaml')
 
 url = 'https://data.novascotia.ca/api/views/metadata/v1/x9dy-aai9'
 def get_metadata(dataset_id):
@@ -21,17 +23,27 @@ def get_variables(dataset_id):
     url = url + dataset_id
     return requests.get(url).json()
 
-def generate_from_metadata(dataset_id, df, data_file):
+def generate_from_metadata(dataset_id,data_file):
+    instrument_columns =["sensor_type", "sensor_serial_number"]
+    dtypes={}
+    for col in instrument_columns:
+        dtypes[col]= 'category'
+    instrument_df = pd.read_csv(data_file, usecols= instrument_columns, dtype=dtypes)
     metadata = get_metadata(dataset_id)
     description = get_variables(dataset_id)
-    instruments = get_instruments(df)
+    instruments = get_instruments(instrument_df)
     instruments = ','.join(instruments)
 
+    with open(data_file, 'r') as f:
+        column_names = csv.DictReader(f).fieldnames
 
-    column_names = list(df.columns.values)
-
-    lat_lon_spatial = get_bbox(df)
-    vertical_spatial = get_vertical(df)
+    spatial_columns =["latitude",'longitude','sensor_depth_at_low_tide_m']
+    dtypes={}
+    for col in spatial_columns:
+        dtypes[col]= 'float'
+    spatial_df = pd.read_csv(data_file, usecols= spatial_columns, dtype=dtypes)
+    lat_lon_spatial = get_bbox(spatial_df)
+    vertical_spatial = get_vertical(spatial_df)
 
     title = metadata['name'] #title
     date_created = metadata['createdAt'] #creattion + publication
@@ -51,8 +63,10 @@ def generate_from_metadata(dataset_id, df, data_file):
     dataset = ET.Element("dataset", active = "true", datasetID=str(dataset_id), type="EDDTableFromAsciiFiles")
     ET.SubElement(dataset, "reloadEveryNMinutes").text = "10080"
     ET.SubElement(dataset, "updateEveryNMillis").text = "10000"
-    ET.SubElement(dataset, "fileDir").text = "/datasets/cmar/"
-    ET.SubElement(dataset, "fileNameRegex").text = ".*merged\.csv"
+    #ET.SubElement(dataset, "fileDir").text = "/datasets/cmar/"
+    #ET.SubElement(dataset, "fileNameRegex").text = ".*merged\.csv"
+    ET.SubElement(dataset, "fileDir").text = "/datasets/cmar/nsodp-sensor-strings/" + str(dataset_id) + "/final_output"
+    ET.SubElement(dataset, "fileNameRegex").text = ".*[0-9][0-9]\.csv"
     ET.SubElement(dataset, "recursive").text = "true"
     ET.SubElement(dataset, "pathRegex").text = ".*"
     ET.SubElement(dataset, "metadataFrom").text = "last"
@@ -61,22 +75,44 @@ def generate_from_metadata(dataset_id, df, data_file):
     ET.SubElement(dataset, "columnSeparator").text = ","
     ET.SubElement(dataset, "columnNamesRow").text = "1"
     ET.SubElement(dataset, "firstDataRow").text = "2"
-    ET.SubElement(dataset, "sortedColumnSourceName").text = "timestamp"
-    ET.SubElement(dataset, "sortFilesBySourceNames").text = "timestamp"
+    ET.SubElement(dataset, "sortedColumnSourceName").text = "timestamp_utc"
+    ET.SubElement(dataset, "sortFilesBySourceNames").text = "timestamp_utc"
     ET.SubElement(dataset, "fileTableInMemory").text = "false"
     ET.SubElement(dataset, "accessibleViaFiles").text = "true"
 
     addAttributes = ET.SubElement(dataset, "addAttributes")
-    ET.SubElement(addAttributes, "att", name = "cdm_data_type").text = "Point"
+    ET.SubElement(addAttributes, "att", name = "cdm_data_type").text = "TimeSeries"
+    ET.SubElement(addAttributes, "att", name = "cdm_timeseries_variables").text = "waterbody,station,sensor_type,sensor_serial_number"
     ET.SubElement(addAttributes, "att", name = "Conventions").text = "COARDS, CF-1.6, ACDD-1.3"
     ET.SubElement(addAttributes, "att", name = "creator_name").text = creator_name
-    ET.SubElement(addAttributes, "att", name = "creator_type").text = 'insitution'
-    ET.SubElement(addAttributes, "att", name = "infoUrl").text = '???'
+    ET.SubElement(addAttributes, "att", name = "creator_type").text = 'institution'
+    ET.SubElement(addAttributes, "att", name = "infoUrl").text = 'https://cmar.ca/coastal-monitoring-program/'
     ET.SubElement(addAttributes, "att", name = "institution").text = creator_name
     ET.SubElement(addAttributes, "att", name = "license").text = license
     ET.SubElement(addAttributes, "att", name = "sourceUrl").text = "(local files)"
     ET.SubElement(addAttributes, "att", name = "standard_name_vocabulary").text = "CF Standard Name Table v55" 
-    ET.SubElement(addAttributes, "att", name = "subsetVariables").text = "waterbody_station, lease, sensor" #ASK
+    #ET.SubElement(addAttributes, "att", name = "subsetVariables").text = "waterbody_station, lease_number, sensor_type, sensor_serial_number, qc_flag_dissolved_oxygen_percent_saturation, qc_flag_temperature, qc_flag_salinity, depth_crosscheck_flag, qc_flag_sensor_depth_measured" #ASK
+    #ET.SubElement(addAttributes, "att", name = "subsetVariables").text = "waterbody, station, sensor_type, sensor_serial_number" #ASK
+    
+    subset_variables = "waterbody, station, sensor_type, sensor_serial_number"
+    if("lease" in column_names):
+        subset_variables+= ",lease"
+    if("string_configuration" in column_names):
+        subset_variables+= ",string_configuration"
+    if("qc_flag_dissolved_oxygen_percent_saturation" in column_names):
+        subset_variables+= ",qc_flag_dissolved_oxygen"
+    if("qc_flag_dissolved_oxygen_uncorrected_mg_per_l" in column_names):
+        subset_variables+= ",qc_flag_dissolved_oxygen_uncorrected"
+    if("qc_flag_salinity_psu" in column_names):
+        subset_variables+= ",qc_flag_salinity"
+    if("qc_flag_sensor_depth_measured_m" in column_names):
+        subset_variables+= ",qc_flag_sensor_depth_measured"
+    if("qc_flag_temperature_degree_c" in column_names):
+        subset_variables+= ",qc_flag_temperature"
+    if("depth_crosscheck_flag" in column_names):
+        subset_variables+= ",depth_crosscheck_flag"
+    ET.SubElement(addAttributes, "att", name = "subsetVariables").text = subset_variables
+    
     ET.SubElement(addAttributes, "att", name = "contributor_name").text = publisher_name
     ET.SubElement(addAttributes, "att", name = "contributor_role").text = "owner"
     ET.SubElement(addAttributes, "att", name = "creator_email").text = publisher_email
@@ -120,22 +156,22 @@ def generate_from_metadata(dataset_id, df, data_file):
 
     # TODO: write code that opens the final output, parses the column names and creates a structure: variable_list = [(var_name, units),(var_name, units),(var_name, units)]
     
-    variable_list = extract_variables(df)
+    variable_list = extract_variables(column_names)
 
     add_variables(variable_list, dataset, column_names)
+    
     tree = ET.ElementTree(dataset)
     ET.indent(tree)
-
     return tree
 
-def extract_variables(df):
-    ignored_columns = ['waterbody_station', 'lease', 'latitude', 'longitude',
-       'deployment_start_date', 'deployment_end_date', 'timestamp', 'sensor',
-       'depth', 'mooring']
+def extract_variables(data_columns):
+    ignored_columns = ['waterbody', 'station', 'lease', 'latitude', 'longitude',
+       'deployment_start_date', 'deployment_end_date', 'timestamp_utc', 'sensor_type', 'sensor_serial_number',
+       'sensor_depth_at_low_tide_m', 'mooring']
 
     variable_list = {}
     
-    for col in df.columns:
+    for col in data_columns:
         if col in ignored_columns:
             pass
         else:
@@ -155,12 +191,12 @@ def get_bbox(df):
 
 def get_vertical(df):
     return [
-        float(df['depth'].max()),
-        float(df['depth'].min()),
+        float(df['sensor_depth_at_low_tide_m'].max()),
+        float(df['sensor_depth_at_low_tide_m'].min()),
     ]
 
 def get_instruments(df):
-    return df['sensor'].unique()
+    return df.apply(lambda x:'%s-%s' % (x['sensor_type'],x['sensor_serial_number']),axis=1).unique()
 
 def add_variables(variable_list, dataset, merged_columns):
     # TODO: update this function so that it understand the new variable_list format([(variable_name, units),(variable_name, units)])
@@ -206,8 +242,10 @@ def add_variables(variable_list, dataset, merged_columns):
 
     # Get the columns in a nice order
     sorted_columns = []
-    if("waterbody_station" in merged_columns):
-        sorted_columns.append("waterbody_station")
+    if("waterbody" in merged_columns):
+        sorted_columns.append("waterbody")
+    if("station" in merged_columns):
+        sorted_columns.append("station")
     if("lease" in merged_columns):
         sorted_columns.append("lease")
     if("latitude" in merged_columns):
@@ -218,12 +256,38 @@ def add_variables(variable_list, dataset, merged_columns):
         sorted_columns.append("deployment_start_date")
     if("deployment_end_date" in merged_columns):
         sorted_columns.append("deployment_end_date")
-    if("timestamp" in merged_columns):
-        sorted_columns.append("timestamp")
-    if("depth" in merged_columns):
-        sorted_columns.append("depth")
-    if("sensor" in merged_columns):
-        sorted_columns.append("sensor")
+    if("string_configuration" in merged_columns):
+        sorted_columns.append("string_configuration")
+    if("sensor_type" in merged_columns):
+        sorted_columns.append("sensor_type")
+    if("sensor_serial_number" in merged_columns):
+        sorted_columns.append("sensor_serial_number")  
+    if("timestamp_utc" in merged_columns):
+        sorted_columns.append("timestamp_utc")
+    if("sensor_depth_at_low_tide_m" in merged_columns):
+        sorted_columns.append("sensor_depth_at_low_tide_m")
+    if("depth_crosscheck_flag" in merged_columns):
+        sorted_columns.append("depth_crosscheck_flag")
+    if("dissolved_oxygen_percent_saturation" in merged_columns):
+        sorted_columns.append("dissolved_oxygen_percent_saturation")
+    if("dissolved_oxygen_uncorrected_mg_per_l" in merged_columns):
+        sorted_columns.append("dissolved_oxygen_uncorrected_mg_per_l")
+    if("salinity_psu" in merged_columns):
+        sorted_columns.append("salinity_psu")
+    if("sensor_depth_measured_m" in merged_columns):
+        sorted_columns.append("sensor_depth_measured_m")
+    if("temperature_degree_c" in merged_columns):
+        sorted_columns.append("temperature_degree_c")
+    if("qc_flag_dissolved_oxygen_percent_saturation" in merged_columns):
+        sorted_columns.append("qc_flag_dissolved_oxygen_percent_saturation")
+    if("qc_flag_dissolved_oxygen_uncorrected_mg_per_l" in merged_columns):
+        sorted_columns.append("qc_flag_dissolved_oxygen_uncorrected_mg_per_l")
+    if("qc_flag_salinity_psu" in merged_columns):
+        sorted_columns.append("qc_flag_salinity_psu")
+    if("qc_flag_sensor_depth_measured_m" in merged_columns):
+        sorted_columns.append("qc_flag_sensor_depth_measured_m")
+    if("qc_flag_temperature_degree_c" in merged_columns):
+        sorted_columns.append("qc_flag_temperature_degree_c")
     
     for col in merged_columns:
         if col not in sorted_columns:
@@ -244,8 +308,7 @@ def add_variables(variable_list, dataset, merged_columns):
 
 
 def main(dataset_id, data_file, outputFolder=None):
-    df = pd.read_csv(data_file, parse_dates=['timestamp'])
-    metadata = generate_from_metadata(dataset_id, df, data_file)
+    metadata = generate_from_metadata(dataset_id, data_file)
 
     base_filename = os.path.splitext(os.path.basename(data_file))[0]
 

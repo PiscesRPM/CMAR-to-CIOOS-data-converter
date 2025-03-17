@@ -6,13 +6,20 @@ from datetime import datetime
 import uuid
 import hashlib
 import pandas as pd
+import csv
 
 sensor_config_file = os.path.join(os.path.dirname(__file__), '..', 'sensors.yaml')
+dtype_config_file = os.path.join(os.path.dirname(__file__), '..', 'data_types.yaml')
 
 def get_metadata(dataset_id):
     url = 'https://data.novascotia.ca/api/views/metadata/v1/'
     url = url + dataset_id
     return requests.get(url).json()
+
+def get_attachments(dataset_id):
+    url = 'https://data.novascotia.ca/api/views/'
+    url = url + dataset_id
+    return requests.get(url).json()['metadata']['attachments']
 
 def generate_from_metadata(dataset_id):
     metadata = get_metadata(dataset_id)
@@ -21,8 +28,8 @@ def generate_from_metadata(dataset_id):
     createDate = metadata['createdAt'] #creattion + publication
     updateDate = metadata['dataUpdatedAt'] #revision
     description = metadata['customFields']['Detailed Metadata']['Usage Considerations'] #abstract:
-    description += 'Contains information licensed under the Open Government Licence – Nova Scotia. If you have accessed any of the Coastal Monitoring Program data, CMAR would appreciate your feedback through this quick '
-    description += '[questionaire](https://docs.google.com/forms/d/e/1FAIpQLSe3TD6umrsVVKnQL13VVMJIpckCi2ctONJsgN7_g-4c-tKTuw/viewform).'
+    #description += 'Contains information licensed under the Open Government Licence – Nova Scotia. If you have accessed any of the Coastal Monitoring Program data, CMAR would appreciate your feedback through this quick '
+    #description += '[questionaire](https://docs.google.com/forms/d/e/1FAIpQLSe3TD6umrsVVKnQL13VVMJIpckCi2ctONJsgN7_g-4c-tKTuw/viewform).'
     keywords = metadata['tags'] #keywords
     language = metadata['customFields']['Detailed Metadata']['Language']
     orgName = "Centre for Marine Applied Research (CMAR)"
@@ -57,8 +64,8 @@ def generate_from_metadata(dataset_id):
                 eovFR.append(eovFRList[count])
             count += 1
 
+    """Depreciated, use attachments code below instead
     distributions = distribution.split(" and ")
-    dist = []
     for distri in distributions:
         distName = distri.split("(",1)[0]
         distURL = distri.split("(",1)[1]
@@ -67,6 +74,18 @@ def generate_from_metadata(dataset_id):
         distAdd  = {'url': distURL, 'name':distName}
         dist.append(distAdd)
     #dist = [{'url': distURL, 'name':distName},{'url': distURL, 'name':distName}]
+    """
+
+    dist = []
+    attachments = get_attachments(dataset_id)
+    for attachment in attachments:
+        attachName = attachment['name']
+        attachID = attachment['assetId']
+        attachURL = "https://data.novascotia.ca/api/views/"
+        attachURL = attachURL + dataset_id + '/files/' + attachID 
+        distAdd  = {'url': attachURL, 'name':attachName}
+        dist.append(distAdd)
+
     dist.append({'url': 'https://cioosatlantic.ca/erddap/tabledap/'+dataset_id+'.html', 'name':'ERDDAP Data Access'})
 
     dict_file = {
@@ -148,12 +167,12 @@ def get_bbox(df):
 
 def get_vertical(df):
     return [
-        float(df['depth'].min()),
-        float(df['depth'].max())
+        float(df['sensor_depth_at_low_tide_m'].min()),
+        float(df['sensor_depth_at_low_tide_m'].max())
     ]
 
 def get_temporal_begin(df):
-    date = df['timestamp'].min()
+    date = df['timestamp_utc'].min()
     date = date.strftime('%Y-%m-%dT%H:%M:%S.000Z')
     return date
 
@@ -163,7 +182,9 @@ def get_spatial(df):
     }
 
 def get_instruments(df, platform):
-    return df[df['waterbody_station'] == platform]['sensor'].unique()
+    #df[df['waterbody_station'] == platform].drop_duplicates(['sensor_type', 'sensor_serial_number'])[['sensor_type','sensor_serial_number']]
+    #return df[df['waterbody_station'] == platform]['sensor'].unique()
+    return df[df['station'] == platform]['sensor'].unique()
 
 def guess_manufacturer(instrument, instrument_config):
     partial_name = instrument.split('-')
@@ -174,15 +195,13 @@ def guess_manufacturer(instrument, instrument_config):
     return None
 
 def get_platforms(df):
-    platforms = []
-    waterbody_platforms = df['waterbody_station'].unique()
-    for water_platform in waterbody_platforms:
-        platforms.append(water_platform.split('-',1)[1])
+    platforms = df['station'].unique()
 
     platform_metadata = []
     index = 0
+    df['sensor'] = df.apply(lambda x:'%s-%s' % (x['sensor_type'],x['sensor_serial_number']),axis=1)
     for platform in platforms:
-        instrument_list = get_instruments(df, waterbody_platforms[index])
+        instrument_list = get_instruments(df, platforms[index])
         index += 1
         if os.path.exists(sensor_config_file):
             with open(sensor_config_file) as f:
@@ -233,7 +252,19 @@ def get_platforms(df):
         return platform_metadata
 
 def generate_metadata_from_data(metadata, data_file):
-    df = pd.read_csv(data_file, parse_dates=['timestamp'])
+    dtypes= {}
+    dataset_columns = ['waterbody','station','latitude','longitude','sensor_type','sensor_serial_number','timestamp_utc', 'sensor_depth_at_low_tide_m']
+
+    if os.path.exists(dtype_config_file):
+        with open(dtype_config_file) as f:
+            dtypes_config = yaml.load(f, Loader=yaml.FullLoader)
+            for col in dataset_columns:
+                if col in dtypes_config and not dtypes_config[col]=='datetime64[ns]':
+                    dtypes[col] = dtypes_config[col]
+    else:
+        print("No dtype config found") 
+
+    df = pd.read_csv(data_file, usecols=dataset_columns, parse_dates=['timestamp_utc'], dtype=dtypes)
     metadata['identification']['temporal_begin'] = get_temporal_begin(df)
     metadata['spatial'] = get_spatial(df)
     platform = get_platforms(df)
@@ -243,7 +274,6 @@ def generate_metadata_from_data(metadata, data_file):
 def main(dataset_id, data_file, output_directory):
     metadata = generate_from_metadata(dataset_id)
     updated_metadata = generate_metadata_from_data(metadata, data_file)
-    
     base_filename = os.path.splitext(os.path.basename(data_file))[0]
 
     yamlName = os.path.join(
