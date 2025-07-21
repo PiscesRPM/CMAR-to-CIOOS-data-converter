@@ -1,0 +1,16 @@
+waterbody: 'category'
+station: 'category'
+deployment_id: 'category'
+timestamp_utc: 'datetime64[ns]'
+sea_surface_wave_significant_height_m: float
+sea_surface_wave_peak_period_s: float
+sea_surface_wave_from_direction_degree: float
+sea_water_to_direction_degree: float
+sea_water_speed_m_s: float
+sensor_depth_below_surface_m: float
+grossrange_flag_sea_surface_wave_significant_height_m: 'category'
+grossrange_flag_sea_surface_wave_peak_period_s: 'category'
+grossrange_flag_sea_surface_wave_from_direction_degree: 'category'
+grossrange_flag_sea_water_speed_m_s: 'category'
+grossrange_flag_sea_water_to_direction_degree: 'category'
+grossrange_flag_sensor_depth_below_surface_m: 'category'
