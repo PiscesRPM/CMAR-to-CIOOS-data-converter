@@ -104,7 +104,7 @@ def group_waterbody_station(merged_df):
 
     return merged_df
 
-def main(input_filename, output_directory):
+def main(input_filename, output_filename):
     util.check_raw_file_extension(input_filename)
 
     # Code copied from fetch metdata to reduce dataframe memory load
@@ -127,8 +127,6 @@ def main(input_filename, output_directory):
     timestamp_dtype = dtypes.pop('timestamp_utc')
     df = pd.read_csv(input_filename, parse_dates=['timestamp_utc'], dtype=dtypes)
 
-    merged_output_filename = setup_merged_output_filename(input_filename, output_directory)
-
     # Merge data based on waterbody, station, lease, latitude, longitude, deployment_period, timestamp, and sensor
     # Changed to be pre-grouped in new format 
     # merged_df = group_by_timestamp(df)
@@ -136,8 +134,8 @@ def main(input_filename, output_directory):
     merged_df = qualitative_to_quantitative(merged_df)
     #Removed grouping waterbody and station together
     #merged_df = group_waterbody_station(merged_df)
-    merged_df.to_csv(merged_output_filename, index=False)
-    return merged_output_filename
+    merged_df.to_csv(output_filename, index=False)
+    return output_filename
     
 
 if __name__ == "__main__":
