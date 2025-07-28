@@ -2329,6 +2329,13 @@ hobo-20900975:
     en: Sensor
     fr: ''
   version: ''
+hobo-20900977:
+  id: hobo-20900977
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 hobo-20900985:
   id: hobo-20900985
   manufacturer: ONSET
@@ -2408,6 +2415,13 @@ hobo-21043077:
   version: ''
 hobo-21043079:
   id: hobo-21043079
+  manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+hobo-21043082:
+  id: hobo-21043082
   manufacturer: ONSET
   type:
     en: Sensor
@@ -3724,6 +3738,13 @@ vr2ar-600015:
   version: ''
 vr2ar-600016:
   id: vr2ar-600016
+  manufacturer: Vemco
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+vr2ar-600017:
+  id: vr2ar-600017
   manufacturer: Vemco
   type:
     en: Sensor

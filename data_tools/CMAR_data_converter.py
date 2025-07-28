@@ -9,6 +9,7 @@ import yaml
 import calendar
 import datetime
 import csv
+from configparser import ConfigParser
 
 from . import util
 
@@ -39,6 +40,8 @@ def group_by_timestamp(df):
     return merged_df
 
 def qualitative_to_quantitative(df):
+    if 'sensor_depth_at_low_tide_m' not in df:
+        return df
     df['sensor_depth_at_low_tide_m'] = df['sensor_depth_at_low_tide_m'].apply(pd.to_numeric, errors='ignore')
     depths = df['sensor_depth_at_low_tide_m'].unique()
     
@@ -104,24 +107,31 @@ def group_waterbody_station(merged_df):
 
     return merged_df
 
-def main(input_filename, output_filename):
+def main(input_filename, output_filename, config):
     util.check_raw_file_extension(input_filename)
 
     # Code copied from fetch metdata to reduce dataframe memory load
     # TODO: Move to util
-    dtypes= {}
+    
     dataset_columns = None
     with open(input_filename, 'r') as f:
         dataset_columns = csv.DictReader(f).fieldnames
 
-    if os.path.exists(dtype_config_file):
-        with open(dtype_config_file) as f:
-            dtypes_config = yaml.load(f, Loader=yaml.FullLoader)
-            for col in dataset_columns:
-                if col in dtypes_config:
-                    dtypes[col] = dtypes_config[col]
-    else:
-        print("No dtype config found") 
+
+    dtypes_file = ""
+    dtypes = {}
+    if 'dtype_config_file' in config['main']:
+        dtypes_file = config['main']['dtype_config_file']
+        dtype_config_file = os.path.join(os.path.dirname(__file__), '..', dtypes_file)
+        if os.path.exists(dtype_config_file):
+            with open(dtype_config_file) as f:
+                dtypes_config = yaml.load(f, Loader=yaml.FullLoader)
+                for col in dataset_columns:
+                    if col in dtypes_config:
+                        dtypes[col] = dtypes_config[col]
+        else:
+            print("No datatype config found")
+
 
     # Can't specify datetime as a dtype when importing so temporarily pop it out
     timestamp_dtype = dtypes.pop('timestamp_utc')

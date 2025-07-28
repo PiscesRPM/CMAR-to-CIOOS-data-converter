@@ -112,6 +112,18 @@ Temperature_nan:
       value: nan
   dataType: float
   destinationName: Temperature_nan
+deployment_date:
+  attributes:
+    ioos_category:
+      value: Time
+    long_name:
+      value: deployment
+    time_precision:
+      value: '1970-01-01'
+    units:
+      value: yyyy-MM-dd
+  dataType: String
+  destinationName: deployment_date
 deployment_end_date:
   attributes:
     ioos_category:
@@ -126,6 +138,14 @@ deployment_end_date:
       value: yyyy-MM-dd
   dataType: String
   destinationName: deployment_end_date
+deployment_id:
+  attributes:
+    ioos_category:
+      value: Identifier
+    long_name:
+      value: deployment id
+  dataType: String
+  destinationName: deployment_id
 deployment_period:
   attributes:
     ioos_category:
@@ -134,6 +154,16 @@ deployment_period:
       value: Deployment Period
   dataType: String
   destinationName: deployment_period
+deployment_sounding_m:
+  attributes:
+    ioos_category:
+      value: location
+    long_name:
+      value: deployment sounding depth
+    units:
+      value: m
+  dataType: float
+  destinationName: deployment_sounding
 deployment_start_date:
   attributes:
     ioos_category:
@@ -204,6 +234,62 @@ dissolved_oxygen_uncorrected_mg_per_l:
       value: mg/L
   dataType: float
   destinationName: dissolved_oxygen_uncorrected
+grossrange_flag_sea_surface_wave_from_direction_degree:
+  attributes:
+    ioos_category:
+      value: quality
+    long_name:
+      value: Gross Range Quality flag for Sea Surface Wave From Direction
+  dataType: String
+  destinationName: grossrange_flag_sea_surface_wave_from_direction
+grossrange_flag_sea_surface_wave_peak_period_s:
+  attributes:
+    ioos_category:
+      value: quality
+    long_name:
+      value: Gross Range Quality Flag for Sea Surface Wave Peak Period
+  dataType: String
+  destinationName: grossrange_flag_sea_surface_wave_peak_period
+grossrange_flag_sea_surface_wave_significant_height_m:
+  attributes:
+    ioos_category:
+      value: quality
+    long_name:
+      value: Gross Range Quality Flag for Sea Surface Significant Height
+  dataType: String
+  destinationName: grossrange_flag_sea_surface_wave_significant_height
+grossrange_flag_sea_surface_wave_to_direction_degree:
+  attributes:
+    ioos_category:
+      value: grossrange
+    long_name:
+      value: grossrange
+  dataType: String
+  destinationName: grossrange_flag_sea_surface_wave_to_direction_degree
+grossrange_flag_sea_water_speed_m_s:
+  attributes:
+    ioos_category:
+      value: quality
+    long_name:
+      value: Gross Range Quality Flag for Sea Water Speed
+  dataType: String
+  destinationName: grossrange_flag_sea_water_speed
+grossrange_flag_sea_water_to_direction_degree:
+  attributes:
+    ioos_category:
+      value: quality
+    long_name:
+      value: Gross Range Quality Flag for Sea Water Direction
+  dataType: String
+  destinationName: grossrange_flag_sea_water_to_direction
+grossrange_flag_sensor_depth_below_surface_m:
+  attributes:
+    ioos_category:
+      value: quality
+    long_name:
+      value: Gross range Quality Flag for Sensor Depth Below Surface
+  dataType: String
+  destinationName: grossrange_flag_sensor_depth_below_surface
 latitude:
   attributes:
     colorBarMaximum:
@@ -334,6 +420,18 @@ qc_flag_temperature_degree_c:
       value: quality_flag
   dataType: String
   destinationName: qc_flag_temperature
+retrieval_date:
+  attributes:
+    ioos_category:
+      value: Time
+    long_name:
+      value: retrieval_date
+    time_precision:
+      value: '1970-01-01'
+    units:
+      value: yyyy-MM-dd
+  dataType: String
+  destinationName: retrieval_date
 salinity_psu:
   attributes:
     ioos_category:
@@ -344,6 +442,66 @@ salinity_psu:
       value: PSU
   dataType: float
   destinationName: salinity
+sea_surface_wave_from_direction_degree:
+  attributes:
+    ioos_category:
+      value: sea_level
+    long_name:
+      value: Sea Surface Wave from Direction
+    standard_name:
+      value: sea_surface_wave_from_direction
+    units:
+      value: degree
+  dataType: float
+  destinationName: sea_surface_wave_from_direction
+sea_surface_wave_peak_period_s:
+  attributes:
+    ioos_category:
+      value: sea_level
+    long_name:
+      value: Sea Surface Wave Peak Period
+    standard_name:
+      value: sea_surface_wave_period_of_highest_wave
+    units:
+      value: s
+  dataType: float
+  destinationName: sea_surface_wave_peak_period
+sea_surface_wave_significant_height_m:
+  attributes:
+    ioos_category:
+      value: sea_level
+    long_name:
+      value: Sea Surface Wave Significant Height
+    standard_name:
+      value: sea_surface_wave_significant_height
+    units:
+      value: m
+  dataType: float
+  destinationName: sea_surface_wave_significant_height
+sea_water_speed_m_s:
+  attributes:
+    ioos_category:
+      value: currents
+    long_name:
+      value: Sea Water Speed
+    standard_name:
+      value: sea_water_speed
+    units:
+      value: m s-1
+  dataType: float
+  destinationName: sea_water_speed
+sea_water_to_direction_degree:
+  attributes:
+    ioos_category:
+      value: currents
+    long_name:
+      value: Sea Water to Direction
+    standarad_name:
+      value: sea_water_to_direction
+    units:
+      value: degree
+  dataType: float
+  destinationName: sea_water_to_direction
 sensor:
   attributes:
     ioos_category:
@@ -372,6 +530,18 @@ sensor_depth_at_low_tide_m:
       value: m
   dataType: float
   destinationName: depth
+sensor_depth_below_surface_m:
+  attributes:
+    ioos_category:
+      value: Location
+    long_name:
+      value: Sensor depth below surface
+    standard_name:
+      value: depth
+    units:
+      value: m
+  dataType: float
+  destinationName: sensor_depth_below_surface
 sensor_depth_measured_m:
   attributes:
     colorBarMaximum:
@@ -388,6 +558,14 @@ sensor_depth_measured_m:
       value: m
   dataType: float
   destinationName: sensor_depth_measured
+sensor_model:
+  attributes:
+    ioos_category:
+      value: Unknown
+    long_name:
+      value: sensor model
+  dataType: String
+  destinationName: sensor_model
 sensor_serial_number:
   attributes:
     ioos_category:
@@ -485,3 +663,31 @@ waterbody_station:
       value: Waterbody
   dataType: String
   destinationName: waterbody_station
+wave_averaging_interval_s:
+  attributes:
+    ioos_category:
+      value: sea_level
+    long_name:
+      value: Wave Averaging Interval
+    units:
+      value: s
+  dataType: float
+  destinationName: wave_averaging_interval
+wave_ensemble_interval_s:
+  attributes:
+    ioos_category:
+      value: sea_level
+    long_name:
+      value: Wave Ensemble Interval
+    units:
+      value: s
+  dataType: float
+  destinationName: wave_ensemble_interval
+wave_pings_per_ensemble:
+  attributes:
+    ioos_category:
+      value: sea_level
+    long_name:
+      value: Wave Pings per Ensemble
+  dataType: float
+  destinationName: wave_pings_per_ensemble
