@@ -157,7 +157,7 @@ def generate_from_metadata(dataset_id):
     return dict_file
 
 def get_bbox(df, bbox = []):
-    df_bbox = [
+    df_bbox = [ 
         float(df['longitude'].min()),
         float(df['latitude'].min()),
         float(df['longitude'].max()),
@@ -189,8 +189,6 @@ def get_vertical(df, vertical = []):
 
 def get_temporal_begin(df, temporal_begin = datetime.max):
     date = df['timestamp_utc'].min()
-    print(date)
-    print(temporal_begin)
     if date < temporal_begin:
         return date
     else:
@@ -296,7 +294,6 @@ def generate_metadata_from_data(config, metadata, input_directory):
     temporal_begin = datetime.max
     spatial_bounds = {}
     for data_file in glob.glob(os.path.join(input_directory, "**/*_final.csv"), recursive = True):
-        print(data_file)
         df = pd.read_csv(data_file, usecols=dataset_columns, parse_dates=['timestamp_utc'], dtype=dtype)
         temporal_begin = get_temporal_begin(df, temporal_begin)
         spatial_bounds = get_spatial(df, spatial_bounds)
@@ -321,9 +318,6 @@ def main(dataset_id, config, input_directory, output_directory):
         output_directory,
         "%s.yaml" % base_filename
     )
-
-    print("%s.yaml" % base_filename)
-    print(yamlName)
         
     with open(yamlName, 'w', encoding='utf8') as f:
         data = yaml.dump(updated_metadata, f, allow_unicode=True, sort_keys=False)

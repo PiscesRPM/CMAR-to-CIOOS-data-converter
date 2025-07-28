@@ -126,8 +126,7 @@ def main(output_raw_directory, config_file, skip_fetch_data=False, skip_split_st
             CMAR_fetch_metadata.main(dataset_id, config, dataset_output_directory, final_output_directory)
 
         if not(skip_create_datasetxml):
-            #for data_file in glob.glob(os.path.join(merged_output_directory, "*.csv")):
-            CMAR_generate_xml.main(dataset_id, config, dataset_output_directory, final_output_directory)
+            CMAR_generate_xml.main(dataset_id, config, final_output_directory)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
