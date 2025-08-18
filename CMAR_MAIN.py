@@ -5,7 +5,7 @@ import yaml
 import pandas as pd
 from configparser import ConfigParser
 
-from data_tools import CMAR_fetch_data, CSV_split_by_station, CMAR_data_converter, CMAR_fetch_metadata, CMAR_generate_xml
+from data_tools import CMAR_fetch_data, CSV_split_by_station, CMAR_data_converter, CMAR_fetch_metadata, CMAR_generate_xml, CMAR_join_datasets
 
 def get_matching_files(directory, pattern):
     files = []
@@ -52,20 +52,23 @@ def main(output_raw_directory, config_file, skip_fetch_data=False, skip_split_st
 
     reference_dataset = None
 
+
     # Check if there is a reference dataset (ex. deployment information)
     if 'reference' in config:
+        print('grabbing reference dataset')
         reference_dataset_id = config['reference']['reference_dataset_id']
         reference_dtype_file = config['reference']['dtype_config_file']
-        reference_dataset_filename = os.path.join(output_directory, reference_dataset_id) + "_raw.csv"
+        reference_dataset_dir = os.path.join(output_directory, 'deployment_reference')
+        reference_dataset_file = os.path.join(reference_dataset_dir, reference_dataset_id) + "_raw.csv"
         if not(skip_fetch_data):
-            CMAR_fetch_data.main(reference_dataset_id, reference_dataset_filename, config, 'reference')
-        reference_dataset = pd.read_csv(reference_dataset_filename, dtype={config['metadata']['col_instrument_id']: 'category'})
+            CMAR_fetch_data.main(reference_dataset_id, reference_dataset_dir, config, 'reference')
+        reference_dataset = pd.read_csv(reference_dataset_file, dtype={config['metadata']['col_instrument_id']: 'category'})
 
     dataset_id_list = config['main']['dataset_id_list'].splitlines()
     for dataset_id in dataset_id_list:
         # Create a new folder inside of output_directory for each dataset
         dataset_directory = os.path.join(output_raw_directory, dataset_id)
-        dataset_output_directory = os.path.join(dataset_directory, "data_by_station")
+        dataset_output_directory = os.path.join(dataset_directory, 'raw_data')
 
             # Create the dataset_output_directory if it doesn't exist
         if not(os.path.exists(dataset_output_directory)):
@@ -80,50 +83,42 @@ def main(output_raw_directory, config_file, skip_fetch_data=False, skip_split_st
         if not(skip_fetch_data):
             CMAR_fetch_data.main(dataset_id, dataset_output_directory, config)
 
-        raw_dataset_files = get_matching_files(dataset_output_directory, "*_raw.csv")
+        process_dataset_files = get_matching_files(dataset_output_directory, "*_raw.csv")
         
+        if len(process_dataset_files) < 1:
+            raise Exception("DatasetID: %s returned no dataset. Make sure the datasetID exists in data.novascotia.ca" % dataset_id)
+
+        recent_data_step = "_raw"
+        recent_data_dir = "/raw_data/"
+
         # If there's a reference dataset, join with the downloaded dataset
         merged_output_directory = os.path.join(dataset_output_directory, "final_output")
         output_filename = raw_output_filename
         if reference_dataset is not None:
             if not reference_dataset.empty:
+                recent_data_step = "_joined"
+                recent_data_dir = "/joined_data/"
                 reference_dataset_columns = config['reference']['dataset_columns'].splitlines()
                 dataset= pd.read_csv(raw_output_filename)
                 joined_df = CMAR_join_datasets.main(dataset, reference_dataset, config['reference']['join_key'], reference_dataset_columns)
-                joined_output_filename = setup_output_filename(merged_output_directory,dataset_id,'joined')
+                joined_output_filename = os.path.join(dataset_directory, "joined_data", dataset_id) + "_joined.csv"
+                os.makedirs(os.path.dirname(joined_output_filename), exist_ok=True)
                 joined_df.to_csv(joined_output_filename, index=False)
-                print(joined_output_filename)
+                process_dataset_files = get_matching_files(dataset_directory, "*_joined.csv")
+                
 
-        # TODO: Fix this to work for going through subdirectories
-        if len(raw_dataset_files) < 1:
-            raise Exception("DatasetID: %s returned no dataset. Make sure the datasetID exists in data.novascotia.ca" % dataset_id)
-
-        # Already does this during the download, can probably cut out
-        if not(skip_split_stations):
-            station_output_directory = os.path.join(dataset_output_directory, "data_by_station")
-            if not(os.path.exists(station_output_directory)):
-                os.mkdir(station_output_directory)
-            CSV_split_by_station.main(output_filename, station_output_directory)
-
-
-        # Iterate through every CSV file in station_output_directory and merge
-        # Actually don't merge?
-        # TODO this will need to be adapted to new changes
-        if not(skip_merge_data):
-            if not(skip_split_stations):
-                for input_filename in glob.glob(os.path.join(station_output_directory, "*.csv")):
-                    CMAR_data_converter.main(input_filename, merged_output_directory)
-            else:
-                CMAR_data_converter.main(raw_output_filename, merged_output_directory, config)
-        else:
-            for raw_file in raw_dataset_files:
-                converted_file = raw_file.replace("_raw", "_final")
-                os.makedirs(os.path.dirname(converted_file), exist_ok=True)
-                CMAR_data_converter.main(raw_file, converted_file, config)
-            
+        
         final_output_directory = dataset_directory.replace("/raw/", "/erddap/")
+        os.makedirs(final_output_directory, exist_ok=True)
+
+        # Use recent data step / dir to work with the most processed version of the dataset
+        for process_file in process_dataset_files:
+            converted_file = process_file.replace(recent_data_step, "_final").replace(recent_data_dir, "/final_output/").replace("/data/raw/", "/data/erddap/")
+            os.makedirs(os.path.dirname(converted_file), exist_ok=True)
+            CMAR_data_converter.main(process_file, converted_file, config)
+            
         if not(skip_create_metadata):
-            CMAR_fetch_metadata.main(dataset_id, config, dataset_output_directory, final_output_directory)
+            CMAR_fetch_metadata.main(dataset_id, config, dataset_directory, final_output_directory)
 
         if not(skip_create_datasetxml):
             CMAR_generate_xml.main(dataset_id, config, final_output_directory)

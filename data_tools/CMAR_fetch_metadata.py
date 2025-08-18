@@ -50,15 +50,15 @@ def generate_from_metadata(dataset_id):
         lang = 'fr'
 
     #Creates an eovEN and eovFR with the preset eovs present in the 'tags' of the metadata. 
-    checkEOV = ['salinity','temperature','dissolved oxygen', 'wave']
-    eovENList = ['Sub Surface Salinity','Sub Surface Temperature', 'Oxygen', 'Sea Surface Height']
-    eovFRList = ['Salinité sous la surface', 'Température sous la surface', 'Oxygène', 'Niveau marine']
+    checkEOV = ['salinity','temperature','dissolved oxygen', 'wave height']
+    eovENList = ['Sub Surface Salinity','Sub Surface Temperature', 'Oxygen', 'Sea State']
+    eovFRList = ['Salinité sous la surface', 'Température sous la surface', 'Oxygène', 'État de la mer']
     eovEN = []
     eovFR = []
     for keyword in keywords:
         count = 0
         for eov in checkEOV:
-            if eov in keyword:
+            if eov in keyword and eovENList[count] not in eovEN:
                 eovEN.append(eovENList[count])
                 eovFR.append(eovFRList[count])
             count += 1
@@ -174,10 +174,10 @@ def get_bbox(df, bbox = []):
         return df_bbox
 
 
-def get_vertical(df, vertical = []):
+def get_vertical(df, col_depth, vertical = []):
     df_vertical = [
-        float(df['sensor_depth_at_low_tide_m'].min()),
-        float(df['sensor_depth_at_low_tide_m'].max())
+        float(df[col_depth].min()),
+        float(df[col_depth].max())
     ]
     if len(vertical) > 0:
         return [
@@ -194,17 +194,20 @@ def get_temporal_begin(df, temporal_begin = datetime.max):
     else:
         return temporal_begin
 
-def get_spatial(df, spatial = {}):
+def get_spatial(df, config, spatial = {}):
+    col_depth = 'sensor_depth_at_low_tide_m'
+    if 'col_depth' in config['metadata']:
+        col_depth = config['metadata']['col_depth']
     if len(spatial)<2:
         #compare df bbox to spatial
         # compare df vertical to spatial
         return {
             'bbox':get_bbox(df),
-            'vertical':get_vertical(df)
+            'vertical':get_vertical(df, col_depth)
         }
     else:
         return {
-            'bbox' : get_bbox(df, spatial['bbox']), 'vertical' : get_vertical(df, spatial['vertical'])
+            'bbox' : get_bbox(df, spatial['bbox']), 'vertical' : get_vertical(df, col_depth, spatial['vertical'])
         }
 
 def get_instruments(df, platform):
@@ -220,11 +223,20 @@ def guess_manufacturer(instrument, instrument_config):
                 return instrument_config[i]['manufacturer']
     return None
 
-def get_platforms(df, sensor_config_file, platform_metadata = []):
+def get_platforms(df, config, sensor_config_file, platform_metadata = []):
     # Files are split by station so assumption that there won't be any duplicates across files
     platforms = df['station'].unique()
     index = 0
-    df['sensor'] = df.apply(lambda x:'%s-%s' % (x['sensor_type'],x['sensor_serial_number']),axis=1)
+    col_depth = 'sensor_depth_at_low_tide_m'
+    col_instrument_type = 'sensor_type'
+    col_instrument_id = 'sensor_serial_number'
+    if 'col_depth' in config['metadata']:
+        col_depth = config['metadata']['col_depth']
+    if 'col_instrument_type' in config['metadata']:
+        col_instrument_type = config['metadata']['col_instrument_type']
+    if 'col_instrument_id' in config['metadata']:
+        col_instrument_id = config['metadata']['col_instrument_id']
+    df['sensor'] = df.apply(lambda x:'%s-%s' % (x[col_instrument_type],x[col_instrument_id]),axis=1)
     for platform in platforms:
         instrument_list = get_instruments(df, platforms[index])
         index += 1
@@ -276,8 +288,7 @@ def get_platforms(df, sensor_config_file, platform_metadata = []):
 
 def generate_metadata_from_data(config, metadata, input_directory):
     dtypes= {}
-    # Fix for wave-current data
-    dataset_columns = ['waterbody','station','latitude','longitude','sensor_type','sensor_serial_number','timestamp_utc', 'sensor_depth_at_low_tide_m']
+    dataset_columns = config['main']['dataset_columns'].splitlines()
 
     sensor_config_file = config['main']['sensors_file']
     dtype_config = util.load_dtypes_file(config)
@@ -296,8 +307,8 @@ def generate_metadata_from_data(config, metadata, input_directory):
     for data_file in glob.glob(os.path.join(input_directory, "**/*_final.csv"), recursive = True):
         df = pd.read_csv(data_file, usecols=dataset_columns, parse_dates=['timestamp_utc'], dtype=dtype)
         temporal_begin = get_temporal_begin(df, temporal_begin)
-        spatial_bounds = get_spatial(df, spatial_bounds)
-        platform = get_platforms(df, sensor_config_file, platform)
+        spatial_bounds = get_spatial(df, config, spatial_bounds)
+        platform = get_platforms(df, config, sensor_config_file, platform)
     metadata['identification']['temporal_begin'] = temporal_begin.strftime('%Y-%m-%dT%H:%M:%S.000Z')
     metadata['spatial'] = spatial_bounds
     metadata["platform"] = platform
@@ -316,7 +327,7 @@ def main(dataset_id, config, input_directory, output_directory):
 
     yamlName = os.path.join(
         output_directory,
-        "%s.yaml" % base_filename
+        "%s_merged.yaml" % base_filename
     )
         
     with open(yamlName, 'w', encoding='utf8') as f:

@@ -42,7 +42,7 @@ def group_by_timestamp(df):
 def qualitative_to_quantitative(df):
     if 'sensor_depth_at_low_tide_m' not in df:
         return df
-    df['sensor_depth_at_low_tide_m'] = df['sensor_depth_at_low_tide_m'].apply(pd.to_numeric, errors='ignore')
+    df['sensor_depth_at_low_tide_m'] = df['sensor_depth_at_low_tide_m'].apply(pd.to_numeric)
     depths = df['sensor_depth_at_low_tide_m'].unique()
     
     string_depths = []
@@ -82,9 +82,18 @@ def split_deployment_period(df):
     
     for col in df:
         if col == 'deployment_range':
-            deployment_dates = df[col].str.split(' to ', 1, expand = True)
+            deployment_dates = df[col].str.split(pat=' to ', n=1, expand = True)
             new_df['deployment_start_date'] = pd.to_datetime(deployment_dates[0], format='%Y-%b-%d')
             new_df['deployment_end_date'] = pd.to_datetime(deployment_dates[1], format='%Y-%b-%d')
+        else:
+            new_df[col] = df[col]
+    return new_df
+
+def format_deployment_period(df):
+    new_df = pd.DataFrame()
+    for col in df:
+        if col == 'deployment_date' or col == 'retrieval_date':
+            new_df[col] = pd.to_datetime(df[col]).dt.strftime('%Y-%m-%d')
         else:
             new_df[col] = df[col]
     return new_df
@@ -140,11 +149,18 @@ def main(input_filename, output_filename, config):
     # Merge data based on waterbody, station, lease, latitude, longitude, deployment_period, timestamp, and sensor
     # Changed to be pre-grouped in new format 
     # merged_df = group_by_timestamp(df)
-    merged_df = split_deployment_period(df)
+
+    merged_df = df
+    if ('deployment_range' in df.columns):
+        merged_df = split_deployment_period(df)
+    elif ('deployment_date' in df.columns or 'retrieval_date' in df.columns):
+        merged_df = format_deployment_period(df)
+    print(merged_df['deployment_date'])
     merged_df = qualitative_to_quantitative(merged_df)
     #Removed grouping waterbody and station together
     #merged_df = group_waterbody_station(merged_df)
     merged_df.to_csv(output_filename, index=False)
+    print(output_filename)
     return output_filename
     
 

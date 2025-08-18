@@ -1,3 +1,66 @@
+Sentinel_V100-24349:
+  id: Sentinel_V100-24349
+  manufacturer: Teledye
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+Sentinel_V100-24349.0:
+  id: Sentinel_V100-24349.0
+  manufacturer: Teledye
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+Sentinel_V100-24350:
+  id: Sentinel_V100-24350
+  manufacturer: Teledye
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+Sentinel_V100-24350.0:
+  id: Sentinel_V100-24350.0
+  manufacturer: Teledye
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+Sentinel_V100-nan:
+  id: Sentinel_V100-nan
+  manufacturer: Teledye
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+Sentinel_V20-185:
+  id: Sentinel_V20-185
+  manufacturer: Teledye
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+Sentinel_V20-185.0:
+  id: Sentinel_V20-185.0
+  manufacturer: Teledye
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+Sentinel_V20-253:
+  id: Sentinel_V20-253
+  manufacturer: Teledye
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+Sentinel_V50-254:
+  id: Sentinel_V50-254
+  manufacturer: ''
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
 TidbiT-20395736:
   id: TidbiT-20395736
   manufacturer: ONSET
@@ -92,6 +155,34 @@ TidbiT-20405713:
 TidbiT-20407505:
   id: TidbiT-20407505
   manufacturer: ONSET
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+Workhorse Sentinel 600kHz-14934:
+  id: Workhorse Sentinel 600kHz-14934
+  manufacturer: Teledye
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+Workhorse Sentinel 600kHz-14934.0:
+  id: Workhorse Sentinel 600kHz-14934.0
+  manufacturer: Teledye
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+Workhorse Sentinel 600kHz-8891:
+  id: Workhorse Sentinel 600kHz-8891
+  manufacturer: Teledye
+  type:
+    en: Sensor
+    fr: ''
+  version: ''
+Workhorse Sentinel 600kHz-8891.0:
+  id: Workhorse Sentinel 600kHz-8891.0
+  manufacturer: Teledye
   type:
     en: Sensor
     fr: ''

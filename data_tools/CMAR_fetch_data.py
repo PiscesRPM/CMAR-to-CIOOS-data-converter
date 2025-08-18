@@ -43,6 +43,7 @@ def split_downloads(dataset_id, output_directory, config, config_section):
             print("No datatype config found")
     search_condition = ""
 
+    # For sensor string downloads, does not work for wave/current since station info in separate download
     if 'fetch_separate_station_data' in config[config_section]:
         stations = client.get(dataset_id, select="DISTINCT waterbody, station")
 
@@ -111,7 +112,6 @@ def fetch_data(dataset_id, output_file, client, config, config_section, dtypes_c
                 for col in dataset_columns:
                     if col in dtypes_config and not dtypes_config[col]=='datetime64[ns]':
                         existing_dtypes[col] = dtypes_config[col]
-            existing_df = pd.read_csv(output_file, parse_dates=['timestamp_utc'], dtype=existing_dtypes)
             if 'timestamp_utc' in dtypes_config:
                 existing_df = pd.read_csv(output_file, parse_dates=['timestamp_utc'], dtype=existing_dtypes)
             else:

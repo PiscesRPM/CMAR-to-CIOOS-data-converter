@@ -52,10 +52,12 @@ def generate_from_metadata(dataset_id,dataset_yaml,config):
     # if (license != 'Nova Scotia Open Government Licence'):
     #     raise Exception('License is not Nova Scotia Open Government License. \t Found License:%s' % license)
 
+    data_folder_name = config['main']['data_folder_name']
+
     dataset = ET.Element("dataset", active = "true", datasetID=str(dataset_id), type="EDDTableFromAsciiFiles")
     ET.SubElement(dataset, "reloadEveryNMinutes").text = "10080"
     ET.SubElement(dataset, "updateEveryNMillis").text = "10000"
-    ET.SubElement(dataset, "fileDir").text = "/datasets/cmar/nsodp-sensor-strings/" + str(dataset_id) + "/final_output"
+    ET.SubElement(dataset, "fileDir").text = "/datasets/cmar/" + data_folder_name + str(dataset_id) + "/final_output"
     ET.SubElement(dataset, "fileNameRegex").text = ".*[0-9][0-9]\.csv"
     ET.SubElement(dataset, "recursive").text = "true"
     ET.SubElement(dataset, "pathRegex").text = ".*"
@@ -287,7 +289,7 @@ def add_variables(variable_list, dataset, merged_columns):
 def main(dataset_id, config, outputFolder=None):
     dataset_yaml_file = os.path.join(
         outputFolder,
-        "%s.yaml" % dataset_id
+        "%s_merged.yaml" % dataset_id
     )
 
     dataset_yaml = {}
@@ -297,6 +299,7 @@ def main(dataset_id, config, outputFolder=None):
     else:
         dataset_yaml = {}
 
+    print("generating dataset xml from metadata")
     metadata = generate_from_metadata(dataset_id, dataset_yaml, config)
 
     xmlName = os.path.join(
